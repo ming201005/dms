@@ -11,4 +11,19 @@
        include niudao/*.conf;  
        #或者：
        include niudao/niudao-server.conf
+       
+ 5、nginx的启动、停止相关命令
+ 
+ 启动 ：sudo nginx 
+ 重启：nginx -s reload
+ nginx -t 测试配置文件修改是否正常
+ 
+ ——————————————
+ 
+ a、查询Nginx主线程
+   ps -el|grep nginx
+ b、正常停止
+   sudo kill -QUIT 进程号
+ c、快速停止
+   sudo kill -TERM 进程号
    
