@@ -1,4 +1,4 @@
-# 牛刀  niudao 一个在线学习的知识共享平台
+# 牛刀（niudao.cn） 一个在线学习的知识共享平台  开源
 
 访问地址是：http://www.niudao.cn  
 
