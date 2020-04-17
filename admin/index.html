@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodingStudy在线学习后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<link rel="icon" href="img/shop.ico" type="img/x-ico" />-->
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/eui/element-ui.css">
+
+    <script src="static/js/vue.min.js"></script>
+    <script src="static/js/axios.min.js"></script>
+    <script src="static/eui/index.js"></script>
+
+    <script src="static/js/App.js"></script>
+    <script src="static/js/auth.js"></script>
+    <script src="static/js/checkIsLogin.js"></script>
+
+    <style>
+        body {
+            font-size: 13px;
+            margin: 0px;
+        }
+        /*头部*/
+        .el-header {
+           /**/ background-color: #23262e;
+            background-color: #028fc5;
+            color: #FFF;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        /*左侧*/
+        .el-aside {
+            background-color: #393d49;
+            color: #FFFFFF;
+        }
+        /*左侧菜单*/
+
+        .el-menu {
+            border-right: solid 1px #393d49;
+            list-style: none;
+            position: relative;
+            margin: 0;
+            padding-left: 0;
+            background-color: #393d49;
+        }
+
+        /*左侧子菜单*/
+        .el-submenu {
+            /*padding: 0px;*/
+            /*border-bottom: 1px solid #23262e;*/
+            border-right: 1px solid #393d49;
+            background-color: #393d49;
+            /*color: #FFFFFF;*/
+        }
+        /*左侧子菜单标题*/
+        .el-submenu__title {
+            /*background-color: #20222a;*/
+            color: #FFFFFF;
+        }
+
+        .el-submenu__title:hover{
+            background-color:#000;
+        }
+
+        .el-submenu .el-menu-item {
+            background-color: #20222a;
+            color: #FFFFFF;
+            height: 50px;
+            line-height: 50px;
+            min-width: auto;
+        }
+
+        .el-menu-item:hover{
+            background-color:#000;
+        }
+
+        .el-menu-item.is-active {
+            color: #FFFFFF;
+            background-color: #292C34;
+        }
+
+        /*中间主要内容部分*/
+        .el-main {
+            display: block;
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+            overflow: auto;
+            box-sizing: border-box;
+            padding: 5px 20px 0px 20px;
+
+        }
+        /*底部*/
+        .el-footer {
+            display: flex;
+            justify-content: center;
+            background-color: #E8EEF1;
+            color: #909399;
+            line-height: 30px;
+        }
+
+        /*左侧-首页菜单按钮*/
+        .home {
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 20px;
+            cursor: pointer;
+            /*background-color: #e0e0e0;*/
+            line-height: 46px;
+            height: 46px;
+            font-size: 18px;
+            /*color: #1E9FFF;*/
+        }
+        /*左侧-首页菜单按钮上的span*/
+        .home span {
+            margin-left: 5px;
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        /*tab页签头部*/
+        .el-tabs__header {
+            padding: 0;
+            position: relative;
+            margin: 0px 5px 0px 5px
+        }
+        /*tab页签*/
+        .el-tabs.el-tabs--card.el-tabs--top {
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0px -6px 14px 7px #f2f2f2;
+        }
+
+        /*tab页签选中*/
+        .el-tabs__item.is-active {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+        /*内容加载框架*/
+        .mainIframe {
+            width: 99%;
+            border: 1px solid #E4E7ED;
+            border-top: 0px;
+            margin: 0px 5px 5px 5px;
+            background-color: rgba(255, 255, 255, .5);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-container>
+            <!-- 顶栏 -->
+            <el-header>
+                <el-row>
+                    <el-col :span="12" style="display: flex;">
+                        <span style="margin-left: 5px; font-size: 20px;">牛刀知识共享平台-后台管理</span>
+                    </el-col>
+                    <el-col :span="12" style="display: flex;justify-content:flex-end;padding-top: 8px">
+                        <el-dropdown>
+                            <el-avatar :size="45" :src="circleUrl"></el-avatar>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item><a @click='addTab("账号信息","sys/info.html")'>账号信息</a></el-dropdown-item>
+                                <el-dropdown-item  onclick="Auth.logout()">退出系统</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+            <!-- 嵌套容器 -->
+            <el-container>
+                <!-- 侧边导航菜单 -->
+                <el-aside  v-bind:style="{height: App.getLeftMenuHeight() + 'px' }" width="200px">
+
+                    <el-menu>
+
+                        <div class="home" @click='addTab("后台首页","mainContainer.html")'>
+                            <span><i class="el-icon-s-home"></i></span>
+                            <span>后台首页</span>
+                        </div>
+
+                        <el-submenu :index="index" v-for="(item,index) in menuList" v-if="item.pid==null">
+                            <template slot="title">
+                                <i class="el-icon-s-goods"></i>{{item.frontendMenuName}}
+                            </template>
+                            <el-menu-item :index="index+'-'+menuIndex"
+                                          v-for="(menuItem,menuIndex) in menuList"
+                                          v-if="menuItem.pid === item.frontendMenuId"
+                                          @click='addTab(menuItem.frontendMenuName,menuItem.frontendMenuUrl)'>{{menuItem.frontendMenuName}}
+                            </el-menu-item>
+                        </el-submenu>
+
+
+                    </el-menu>
+                </el-aside>
+                <!-- 内容 -->
+                <el-main>
+
+                    <el-tabs v-model="menuTabsValue" type="card" closable @tab-remove="removeTab">
+
+                        <el-tab-pane
+                                v-for="(item, index) in menuTabs"
+                                :key="item.name"
+                                :label="item.title"
+                                :name="item.name">
+                            <iframe  id="iframe" class="mainIframe" :src="item.content" :height="App.getIfmAutoHeight()"></iframe>
+                        </el-tab-pane>
+
+                    </el-tabs>
+
+                </el-main>
+            </el-container>
+            <!-- 底栏 -->
+<!--            <el-footer height="50px">-->
+<!--                <span style="margin-top: 15px; font-size: 12px;">版权所有©莫小明 渝ICP备8835921号-8888888</span>-->
+<!--            </el-footer>-->
+
+        </el-container>
+    </template>
+</div>
+
+</body>
+<script>
+    var Main = {
+        data() {
+            //默认加载
+            return {
+                //头像
+                circleUrl: "../static/img/wangyan.jpg",
+                //定义一个集合：左侧菜单点击后，在右边出现页签集合。
+                menuTabs: [],
+                //当前点中的菜单
+                menuTabsValue: '',
+                //默认打开的首页，且不可删除
+                indexMenu: {
+                    name: "后台首页",
+                    url: "mainContainer.html"
+                },
+                //显示菜单树
+                menuList: Auth.getMenus()
+            }
+        },
+        //初始化
+        created: function () {
+            //默认打开首页
+            this.addTab(this.indexMenu.name, this.indexMenu.url);
+        },
+        methods: {
+
+            /**
+             * 添加
+             * @param targetName
+             * @param contentUrl
+             */
+            addTab(targetName, contentUrl) {
+                //如果是前端或H5端
+                if (targetName === "Web首页" || targetName === "H5首页"){
+                    window.open(contentUrl);
+                    return;
+                }
+                //console.log("targetName==" + targetName + ",contentUrl=" + contentUrl);
+                //设置页签唯一标识符=标题名称+链接
+                let newTabName = contentUrl.replace(new RegExp("/", "gm"), "") + "_" + targetName;
+                //先判断是否已经打开
+                let tabs = this.menuTabs;
+                var isOpen = false;
+                tabs.forEach((tab, index) => {
+                    //查找是否已经打开。
+                    if (tab.name === newTabName) {
+                        //设置选中
+                        isOpen = true;
+                    }
+                });
+
+                //如果没被打开,设置一个新的页签
+                if (!isOpen) {
+                    this.menuTabs.push({
+                        title: targetName,
+                        name: newTabName,
+                        content: contentUrl
+                    });
+                }
+
+                this.menuTabsValue = newTabName;
+            },
+
+
+            /**
+             * 删除
+             * @param targetName
+             */
+            removeTab(targetName) {
+                let tabs = this.menuTabs;
+                let activeName = this.menuTabsValue;
+                //console.log("activeName==" + activeName + ",targetName=" + targetName);
+                //首页禁止关闭
+                if (targetName === this.indexMenu.url.replace(new RegExp("/", "gm"), "") + "_" + this.indexMenu.name) return;
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.name === targetName) {
+                            let nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                activeName = nextTab.name;
+                            }
+                        }
+                    });
+                }
+
+                this.menuTabsValue = activeName;
+
+                this.menuTabs = tabs.filter(tab => tab.name !== targetName);
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main);
+    var app = new Ctor().$mount('#app');
+</script>
+</html>

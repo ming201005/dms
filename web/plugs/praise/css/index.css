@@ -1,0 +1,17 @@
+/* CSS Document */
+#prainsebtn
+{
+	line-height:48px;
+	background-color:#242C34;
+	color: #fff;
+	font-size: 14px;
+	font-family: Microsoft YaHei;
+	cursor: pointer;
+	display:block;
+	text-align:center;
+}
+#prainsebtn i{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+}

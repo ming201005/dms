@@ -1,0 +1,128 @@
+body{
+    font-size: 13px;
+}
+#app{
+    width: 100%;
+    margin: auto;
+}
+
+/*表单窗口*/
+.model_form{
+    display: flex;
+    flex-flow: wrap;
+    border: 2px solid #e9e9eb;
+    background-color: #FFFFFF;
+    z-index: 99;
+}
+
+.flow {
+    /*定义绝对位置浮动窗口*/
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 95%;
+
+    /* Firefox */
+    -moz-box-shadow: 3px 3px 8px 5px #C5C5C5;
+    box-shadow: 3px 3px 8px 5px #C5C5C5;
+}
+
+
+.item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0 0 0 ;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ededed;
+}
+.item label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+}
+.button_group {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #E6E6E6;
+}
+
+.line {
+    border: 1px solid #E6E6E6;
+    width: 99.8%;
+    text-align: left;
+}
+
+.button_group label{
+    padding: 5px 10px;
+    width: 92%;
+    text-align: left;
+    font-weight: bold;
+    cursor : move;
+}
+.button_group span{
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button_group button{
+    margin: 5px;
+    height: 28px;
+    line-height:28px;
+    background: #0E90D2;
+    color: #fff;
+    border: 1px solid #ddd;
+}
+.model_list{
+    margin-top: 8px;
+}
+.model_list table {
+    background:#ededed;
+}
+.model_list table tr {
+    background:#FFFFFF;
+    color:#000;
+}
+/*斑马效果*/
+.model_list table tr:nth-child(even){
+    background-color: #f6f6f6;
+}
+/*头部*/
+.model_list table .h {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+/*列空隙*/
+.model_list table tr td {
+    padding: 5px;
+}
+
+
+/* 权限-分配资源相关页面css*/
+.role {
+    display: flex;
+    justify-content: space-between;
+}
+
+.role .left {
+    width: 40%;
+    height: 800px;
+    padding: 2px;
+    background-color: #ECECEC;
+}
+
+.role .rigth {
+    width: 58%;
+}
+table tr td {
+    text-align: left;
+}
+.selectRow {
+    background-color: #80bdff;
+}
+
+

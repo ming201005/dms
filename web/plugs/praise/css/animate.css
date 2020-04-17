@@ -1,0 +1,115 @@
+/* CSS Document */
+/*点赞*/
+@-webkit-keyframes niceIn {
+	0% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: scale(1.5);
+		transform: scale(1.5)
+	}
+	70% {
+		-webkit-transform: scale(.8);
+		transform: scale(.8)
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+}
+@keyframes niceIn {
+	0% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1)
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: scale(1.5);
+		-ms-transform: scale(1.5);
+		transform: scale(1.5)
+	}
+	70% {
+		-webkit-transform: scale(.8);
+		-ms-transform: scale(.8);
+		transform: scale(.8)
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1)
+	}
+}
+
+@-o-keyframes niceIn{
+	0% {
+		opacity: 1;
+		-o-transform: scale(1);
+		transform: scale(1)
+	}
+	50% {
+		opacity: 1;
+		-o-transform: scale(1.5);
+		transform: scale(1.5)
+	}
+	70% {
+		-o-transform: scale(.8);
+		transform: scale(.8)
+	}
+	100% {
+		opacity: 1;
+		-o-transform: scale(1);
+		transform: scale(1)
+	}
+} 
+
+@-moz-keyframes niceIn{
+	0% {
+		opacity: 1;
+		-moz-transform: scale(1);
+		transform: scale(1)
+	}
+	50% {
+		opacity: 1;
+		-moz-transform: scale(1.5);
+		transform:scale(1.5)
+	}
+	70% {
+		-o-transform: scale(.8);
+		transform: scale(.8)
+	}
+	100% {
+		opacity: 1;
+		-moz-transform: scale(1);
+		transform: scale(1)
+	}
+}
+.niceIn {
+	-webkit-animation:niceIn 0.8s .2s ease;
+	-moz-animation:niceIn 0.8s .2s ease;
+	-o-animation:niceIn 0.8s .2s ease;
+	animation:niceIn 0.8s .2s ease;
+}
+.dynamiconicon
+{
+	line-height:48px;
+	background-color:#242C34;
+	color: #fff;
+	margin-right: 20px;
+	font-size: 14px;
+	font-family: Microsoft YaHei;
+	cursor: pointer;
+	display:block;
+	text-align:center;
+}
+.dynamiconicon i{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+}

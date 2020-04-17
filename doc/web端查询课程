@@ -1,0 +1,25 @@
+ SELECT
+    a.course_id,
+    d.course_category_name,
+    e.course_type_name,
+    a.course_name,
+    a.course_img,
+    a.price,
+    a.study_number,
+    a.create_time
+FROM
+    course a
+        LEFT JOIN
+    course_and_knowledge b ON b.course_id = a.course_id
+        LEFT JOIN
+    course_and_people c ON c.course_id = a.course_id
+        LEFT JOIN
+    course_category d ON d.course_category_id = a.course_category_id
+        LEFT JOIN
+    course_type e ON e.course_type_id = a.course_type_id
+where  a.course_category_id = '520c3db3288266908aa6d21d3779ce8a'
+  and a.course_type_id <>''
+  and b.course_knowledge_id in ('2d1fb04c5dea34f74d336152c97d74a7','076406cee6824e34cdd61b41001c5b23')
+  and c.course_for_people_id in ('379329d3bd4c718ba2680ed1737731a2','22c4229866921d7e3ccf37bb7993ac84','22c4229866921d7e3ccf37bb7993ac84')
+group by a.course_id
+order by a.study_number DESC
