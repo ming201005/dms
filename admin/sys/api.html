@@ -1,8 +1,17 @@
+<!--
+作者：小明哥
+说明：本示例使用最简单，没有使用任何组件的开发方式。
+可对比menu.html模块的代码。
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>api管理</title>
+
+
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/eui/element-ui.css" rel="stylesheet">
 
     <script src="../static/js/vue.min.js"></script>
     <script src="../static/js/axios.min.js"></script>
@@ -11,62 +20,106 @@
     <script src="../static/js/App.js"></script>
     <script src="../static/js/auth.js"></script>
     <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
 
-    <link rel="stylesheet" href="../static/css/template.css">
+    <link href="../static/css/template.css" rel="stylesheet">
 
 </head>
 <body>
 <div id="app">
+    <refresh-comm></refresh-comm>
+    <!--引用form-box-comm组件-->
+    <form-box-comm :add-api-url="url"
+                   :box-title="boxTitle"
+                   :edit-api-url="url"
+                   :id-key="model.backendApiId"
+                   :model="model"
+                   :on-success="successHandler"
+                   :on-validate="formValidateHandler"
+                   ref="myForm">
 
-    <div class="model_box">
+        <!--添加自己的元素-->
+        <template>
+            <div style="width: 62%;float: left;">
+                <div class="item">
+                    <label for="parentName">父级菜单：</label>
+                    <input disabled id="parentName" v-model="model.parentName">
+                </div>
 
-        <div class="item">
-            <label for="parentName">父级菜单：</label>
-            <input id="parentName" v-model="model.parentName" disabled>
-        </div>
+                <div class="item">
+                    <label for="backendApiName">API中文名：</label>
+                    <input id="backendApiName" v-model="model.backendApiName">
+                </div>
 
-        <div class="item">
-            <label for="backendApiName">API中文名：</label>
-            <input id="backendApiName" v-model="model.backendApiName">
-        </div>
+                <div class="item">
+                    <label for="backendApiUrl">请求地址：</label>
+                    <input id="backendApiUrl" v-model="model.backendApiUrl">
+                    <span>请按AntPathMatcher支持的匹配规则填写</span>
+                </div>
 
-        <div class="item">
-            <label for="backendApiUrl">请求地址：</label>
-            <input   id="backendApiUrl" v-model="model.backendApiUrl">
-            <span>请按AntPathMatcher支持的匹配规则填写</span>
-        </div>
+                <div class="item">
+                    <label>请求方式：</label>
+                    <input type="checkbox" v-model="backendApiMethods" value="GET">GET
+                    <input type="checkbox" v-model="backendApiMethods" value="POST">POST
+                    <input type="checkbox" v-model="backendApiMethods" value="PUT">PUT
+                    <input type="checkbox" v-model="backendApiMethods" value="DELETE">DELETE
+                    <input type="checkbox" v-model="backendApiMethods" value="OPTIONS">OPTIONS
+                </div>
 
-        <div class="item">
-            <label>请求方式：</label>
-            <input type="checkbox"  v-model="backendApiMethods" value="GET">GET
-            <input type="checkbox"  v-model="backendApiMethods" value="POST">POST
-            <input type="checkbox"  v-model="backendApiMethods" value="PUT">PUT
-            <input type="checkbox"  v-model="backendApiMethods" value="DELETE">DELETE
-            <input type="checkbox"  v-model="backendApiMethods" value="OPTIONS">OPTIONS
-        </div>
+                <div class="item">
+                    <label for="backendApiSort">排序：</label>
+                    <input id="backendApiSort" type="number" v-model="model.backendApiSort">
+                    <span>必填，建议：分类一：100、101；分类二：200、201；以此类推</span>
+                </div>
+                <div class="item">
+                    <label for="description">说明：</label>
+                    <input id="description" v-model="model.description">
+                </div>
+            </div>
+            <div style="width: 30%;float: right; margin-left: 10px;">
+                <span style="font-size: 15px; font-weight: bold;">Api配置规则如下：</span>
+                <ul>
+                    <li>？匹配一个字符</li>
+                    <li>*匹配0个或多个字符</li>
+                    <li>**匹配0个或多个目录</li>
+                </ul>
+                <span style="font-size: 15px; font-weight: bold;">示例：</span>
+                <ul>
+                    <li>
+                        <span style="padding: 3px;background-color: #ffc107">/a/b/*x</span>
+                        <span>匹配 /a/b/x，/a/b/ax，/a/b/abx ；不匹配 /a/yy/x；</span>
+                    </li>
+                    <li>
+                        <span style="padding: 3px;background-color: #ffc107">/a/b/a?x  </span>
+                        <span>匹配 /a/b/efx；不匹配 /a/b/ax，/a/b/efcx</span>
+                    </li>
+                    <li>
+                        <span style="padding: 3px;background-color: #ffc107">/**/a/b  </span>
+                        <span>匹配 /ming/a/b，/yz/ming/a/b；不匹配 /ming/a/c</span>
+                    </li>
+                    <li><span style="padding: 3px;background-color: #ffc107">/**/*.html</span> 匹配 所有以.html结尾的路径</li>
+                </ul>
 
-        <div class="item">
-            <label for="backendApiSort">排序：</label>
-            <input type="number" id="backendApiSort" v-model="model.backendApiSort">
-            <span>务必填写，建议：分类一：100、101、102；分类二：200、201；以此类推</span>
-        </div>
-        <div class="item">
-            <label for="description">说明：</label>
-            <input id="description" v-model="model.description">
-        </div>
-        <div class="button_group">
-            <button @click="save" >保存</button>
-            <button >取消</button>
-        </div>
-    </div>
+            </div>
+        </template>
 
-    <div class="model_list">
-        <div class="button_group line">
-            <button @click="addNew" >新建</button>
-            <button >删除</button>
-        </div>
-        <table width="100%" border="0" cellspacing="1" cellpadding="0">
-            <tr class="h">
+    </form-box-comm>
+
+
+    <!--引用data-list-comm组件-->
+    <data-list-comm :delete-api-url="url"
+                    :list-api-url="url"
+                    :on-add-new-form="onAddNewFormHandler"
+                    @on-delete-success="getList"
+                    ref="apiList"
+                    ref-parent="true"
+                    row-id-key="backendApiId">
+
+        <!--自定义表头,覆盖默认模板-->
+        <template>
+            <tr class="h" slot="dataHead">
                 <td>父级</td>
                 <td>API名称</td>
                 <td>请求地址</td>
@@ -75,8 +128,13 @@
                 <td>说明</td>
                 <td>操作</td>
             </tr>
+        </template>
+        <!--自定义内容器,覆盖默认模板-->
+        <template>
+            <tr :style="item.pid==null? {backgroundColor:backgroundColor}:{}"
+                v-for="item in modelList"
+                v-if="modelList !=null && modelList.length>0">
 
-            <tr v-for="item in modelList" :style="(item.pid==null && item.backendApiId !=1)?  {backgroundColor:backgroundColor}:{}">
                 <td>{{item.parentName}}</td>
                 <td>{{item.pid==null? "+"+item.backendApiName:"—"+item.backendApiName}}</td>
                 <td>{{item.backendApiUrl}}</td>
@@ -84,158 +142,51 @@
                 <td>{{item.backendApiSort}}</td>
                 <td>{{item.description}}</td>
                 <td>
-                    <button @click="editModel(item)">编辑</button>
-                    <button @click="del(item.backendApiId)">删除</button>
+                    <button @click="onEditFormHandler(item)">编辑</button>
+                    <button @click="del(item)">删除</button>
                     <button @click="addChild(item)" v-if="item.pid==null">添加子菜单</button>
                 </td>
             </tr>
-        </table>
-    </div>
-
+        </template>
+    </data-list-comm>
 </div>
 <script>
-
     let vue = new Vue({
         el: "#app",
         data: {
-            url : global_api_url+"sysBackendApiTable",
+            boxTitle: '新增Api',
+            url: global_api_url + "sysBackendApiTable",
             //对象
-            model:{
-                backendApiId:null,
-                backendApiName:null,
-                backendApiUrl:null,
-                backendApiMethod:null,
-                parentName:null,
-                pid:null,
-                backendApiSort:null,
-                description:null
+            model: {
+                backendApiId: null,
+                backendApiName: null,
+                backendApiUrl: null,
+                backendApiMethod: null,
+                parentName: null,
+                pid: null,
+                backendApiSort: null,
+                description: null
             },
-           // backendApiMethods:[],
+            // backendApiMethods:[],
             //列表
-            modelList:[],
+            modelList: [],
             //父级背景颜色
-            backgroundColor:'#ECECEC'
+            backgroundColor: '#ECECEC'
         },
-        created() {
-            this.getModelList();
-        },
-        methods: {
-            //查询列表
-            getModelList() {
-                axios.get(this.url).then(rs => {
-                    if(rs.data.code == 0) {
-                        console.log("菜单管理==》",rs.data.data);
-                        this.modelList = rs.data.data;
-                    }else{
-                        alert(rs.data.msg);
-                    }
-                }).catch(err => {
-                    console.log("错误信息==》",err);
-                });
-            },
 
-            /**
-             * 准备新增
-             */
-            addNew(){
-                this.model = {};
-            },
-
-            /**
-             * 准备编辑的数据
-             */
-            editModel(item){
-                this.model = item;
-                console.log("编辑editModel---->",this.model);
-            },
-
-            /**
-             * 想显示父节点名称的话，后端查询要自身表关联。
-             */
-            addChild(item) {
-                //把当前的ID赋给子节点的pid
-                this.model = {};
-                this.model.pid = item.backendApiId;
-                //把当前的名赋给子节点父级名
-                this.model.parentName = item.backendApiName;
-            },
-
-            /**
-             * 保存数据，包括新增、和编辑
-             */
-            save(){
-              if(this.model.backendApiId ==null){
-                  this._add();
-              }else{
-                  this._edit();
-              }
-            },
-
-            /**
-             * 新增
-             */
-            _add() {
-                console.log("here  add...............")
-
-                axios.post(this.url, this.model).then( rs => {
-                    if(rs.data.code == 0) {
-                        //this.model = rs.data.data;
-                        this.getModelList();
-                    }else{
-                        alert(rs.data.msg);
-                    }
-                }).catch(err => {
-                    console.log(err);
-                });
-            },
-
-            /**
-             * 编辑
-             * @param item
-             */
-            _edit() {
-                console.log("here  edit...............")
-                axios.put(this.url, this.model).then( rs => {
-                    if(rs.data.code == 0) {
-                        //this.model = rs.data.data;
-                        this.getModelList();
-                    }else{
-                        alert(rs.data.msg);
-                    }
-                }).catch(err => {
-                    console.log(err);
-                });
-            },
-
-            /**
-             * 删除,如果要做批量删除。请传多个frontendMenuId，或者
-             * 传“,”分开的id，例如：id=1,2,3,5,6。后端接收参数idList
-             * @param backendApiId
-             */
-            del(backendApiId) {
-                if(confirm('一旦删除，不可恢复，请确认。')){
-                    let url = this.url + "?idList="+backendApiId;
-                    axios.delete(url).then( rs => {
-                        if(rs.data.code == 0) {
-                            this.getModelList();
-                        }else{
-                            alert(rs.data.msg);
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                }
-            }
+        // //虚拟DOM挂在后再调用
+        mounted() {
+            this.getList()
         },
         //计算属性
-        computed:{
-            backendApiMethods:{
+        computed: {
+            backendApiMethods: {
                 get() {
                     //把model.backendApiMethod转化成数组
                     //model.backendApiMethod存储的是“,”分开的数据
                     let arr = [];
                     let methodStr = this.model.backendApiMethod;
-                    if (methodStr != null && methodStr !="") {
+                    if (methodStr != null && methodStr != "") {
                         arr = methodStr.split(",");
                     }
                     return arr;
@@ -243,10 +194,95 @@
                 set(val) {
                     //有变化后，把值赋给model.backendApiMethod
                     this.model.backendApiMethod = val.toString();
-                    console.log("计算属性computed -->this.model===>",this.model);
+                    console.log("计算属性computed -->this.model===>", this.model);
                 }
             }
+        },
+
+        methods: {
+
+            /**
+             * 必须设置async，且是mounted方法内执行，否则无法取到有异步请求远程数据
+             */
+            async getList() {
+                //此方法内有异步，必须设置等待
+                await this.$refs.apiList.getModelList();
+                this.modelList = this.$refs.apiList.modelList;
+            },
+
+            /**
+             * 挂载表单保存数据前，验证方法
+             * 这个方法必须有true/false返回值
+             */
+            formValidateHandler(model) {
+                //console.log(model);
+                if (model.backendApiName != null && model.backendApiName != "") {
+                    return true;
+                } else {
+                    alert("请输入API名称！");
+                    return false;
+                }
+            },
+
+            /**
+             * 数据保存成功后执行
+             */
+            successHandler(data) {
+                //console.log(data);
+                this.getList();
+                this.$refs.myForm.closeForm();
+            },
+
+            /**
+             * 挂载新建方法
+             */
+            onAddNewFormHandler() {
+                //打开窗口
+                this.$refs.myForm.showForm();
+                this.boxTitle = '新增Api';
+
+                //恢复原样
+                this.model = {};
+            },
+
+            /**
+             * 挂载获得编辑方法
+             */
+            onEditFormHandler(item) {
+                //打开窗口
+                this.$refs.myForm.showForm();
+                this.boxTitle = `正在修改[${item.backendApiName}]`;
+
+                //赋值
+                this.model = item;
+            },
+
+            /**
+             * 想显示父节点名称的话，后端查询要自身表关联。
+             */
+            addChild(item) {
+                //恢复原样
+                this.model = {};
+                //打开窗口
+                this.$refs.myForm.showForm();
+
+                //把当前的ID赋给子节点的pid
+                this.model.pid = item.backendApiId;
+                //把当前的菜单名赋给子节点父级名
+                this.model.parentName = item.backendApiName;
+
+            },
+
+            /**
+             * 删除数据
+             * @param frontendMenuId
+             */
+            del(item) {
+                //直接调用子组件方法
+                this.$refs.apiList.del(item);
+            }
         }
+
     });
 
 </script>

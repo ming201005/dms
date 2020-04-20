@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/MyBatis-plus-boot-starter/3.3.1/mybatis-plus-boot-starter-3.3.1.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/MyBatis-plus-boot-starter/3.3.1/MyBatis-plus-boot-starter-3.3.1-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/MyBatis-plus-boot-starter/3.3.1/MyBatis-plus-boot-starter-3.3.1-sources.jar!/" />
     </SOURCES>

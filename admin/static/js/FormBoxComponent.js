@@ -4,10 +4,13 @@
 Vue.component('form-box-comm', {
     //模板
     template: `
+
+
  <div v-if="isShow || formType>0" :class="formClass">
     <div class="button_group line" @mousedown="moveForm">
         <label>{{boxTitle}}</label><span v-if="formType<1 || !formType"  @click="closeForm">关闭</span>
     </div>
+    
     <slot>
          <div  style="margin: 10px; 
                       line-height: 20px;
@@ -20,6 +23,7 @@ Vue.component('form-box-comm', {
             <button @click="closeForm">取消</button>
         </div>
     </div>
+    
 </div>
 `,
     //组件内数据
@@ -90,6 +94,7 @@ Vue.component('form-box-comm', {
                 ;
                 break;
         }
+
     },
 
     methods: {

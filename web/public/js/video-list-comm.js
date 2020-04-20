@@ -6,9 +6,9 @@ Vue.component('video-list-comm',{
                     <p class="header-name on" :order-text="tabText">{{title}}</p>
                 </div>
                 <div class="public-content-header-right flex">
-                    <p class="header-class">共<span class="orange">{{total}}</span>个教程</p>
+                    <p class="header-class">共<span class="orange">{{total}}</span>个课程</p>
                     <slot></slot>
-                    <p class="gray-9"><a :href="moreUrl">查看更多教程>></a></p>
+                    <p class="gray-9"><a :href="moreUrl">查看更多课程>></a></p>
                 </div>
             </div>
             <div class="develop-video-list" :style="small?{width:'280px'}:{}">
@@ -22,8 +22,8 @@ Vue.component('video-list-comm',{
                         </div>
                         <p class="video-time">{{item.createTime | dateFormat}}</p>
                     </div>
-                    <p class="item-name">{{item.courseName}}<span class="right f12 gray9">{{item.courseTypeName}}</span>
-                    </p>
+                    <p class="item-name" style="color: #909399;">{{item.courseTypeName}} </p>
+                    <p class="item-name">{{item.courseName}}</p>
                     <p class="item-study">
                         <!--<span v-if="item.price>0" class="item-price"><s>￥{{item.price}}</s></span>-->
                         <span class="item-free">免费</span>

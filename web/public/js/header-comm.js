@@ -48,10 +48,7 @@ Vue.component('header-comm', {
     methods: {
         init(){
             this.accountUrl = null;
-            //页面标题
-            //let titles = ['首页-知识共享平台', '课程-课程学习', '阅读-书籍在线阅读', '开源-开源项目推荐', '圈子-提问、分享、讨论'];
-            //根据index设置对应的页面标题
-            //document.title = titles[this.index];
+            //TODO
         }
     }
 });

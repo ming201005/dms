@@ -25,7 +25,7 @@
     <refresh-comm></refresh-comm>
     <!--引用form-box-comm组件-->
     <form-box-comm ref="myForm"
-                   :form-type="0"
+                   :form-type="1"
                    :box-title="boxTitle"
                    :add-api-url="url+'/register'"
                    :edit-api-url="url"
@@ -44,7 +44,7 @@
             <div class="item">
                 <label for="passw">用户密码：</label>
                 <input type="password" id="passw" v-model="model.passw">
-                <span>初始密码：000000</span>
+                <span>初始密码：000000(密码范围是6~20位数)</span>
             </div>
 
             <div class="item">

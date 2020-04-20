@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="./assets/niudao.ico"/>
     <title>牛刀知识共享平台-详情页</title>
     <meta name="keywords" content="系统视图、数据、权限、控制、SaaS平台、PaaS平台、大神、大牛、牛人、程序员">
-    <meta name="description" content="DynamicOn低代码平台视频教程，多方位的培训讲解学习社区">
+    <meta name="description" content="DynamicOn低代码平台视频课程，多方位的培训讲解学习社区">
 
     <link rel="stylesheet" type="text/css" href="./plugs/custom-scrollbar/css/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" type="text/css" href="./public/css/niudao.css" >
@@ -17,59 +17,58 @@
     <script src="./public/js/vue.min.js"></script>
     <script src="./public/js/axios.min.js"></script>
     <script src="./plugs/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="./plugs/share/js/social-share.min.js"></script>
     <script src="./plugs/custom-scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
     <!--自定义JS文件夹-->
     <script src="./public/js/comm.js"></script>
-    <script src="public/js/header-comm.js"></script>
-    <script src="public/js/video-list-comm.js"></script>
+    <script src="./public/js/header-comm.js"></script>
+    <script src="./public/js/video-list-comm.js"></script>
     <script src="./public/js/page-comm.js"></script>
 
 </head>
 
 <body>
-<div class="web-wrap public-custom-scrollbar" id="web-page">
+<div class="web-wrap public-custom-scrollbar" id="app">
     <header-comm index="1"></header-comm>
     <div class="develop-detail">
+        <div class="public-bread-share">
+            <ul class="public-bread-list margin-auto">
+                <li><i class="tml-icon tml-adress"></i>当前位置：</li>
+                <li><a href="/">首页 &gt;</a></li>
+                <li><a href="course">课程列表 &gt;</a></li>
+                <li><a href="javascript:;">课程播放</a></li>
+            </ul>
+        </div>
+
         <div class="develop-detail-banner">
             <div class="video-player">
-
-                <div class="public-bread-share">
-                    <ul class="public-bread-list left">
-                        <li><i class="tml-icon tml-adress"></i>当前位置：</li>
-                        <li><a href="/">首页 &gt;</a></li>
-                        <li><a href="course">课程列表 &gt;</a></li>
-                        <li><a href="javascript:;">{{model.courseName}}-{{playV.courseChapterName}}</a></li>
-                    </ul>
-                </div>
 
                 <div class="video-player-box">
                     <div class="video-player-left">
                         <div class="video-share">
-                            <p class="study-num">学习人数：5284</p>
-                            <div style="flex:1;"></div>
-                            <!--                            <div class="flex html-Collection" style="margin-right: 30px; ">-->
-                            <!--                                &lt;!&ndash;访问次数&ndash;&gt;-->
-                            <!--                                <a href="javascript:;">-->
-                            <!--                                    <i>  </i>-->
-                            <!--                                    &lt;!&ndash; 点击后状态 class="tml-icon tml-praise-click" &ndash;&gt;-->
-                            <!--                                </a>-->
-                            <!--                                &lt;!&ndash;点赞&ndash;&gt;-->
-                            <!--                                <a href="javascript:;" id="prainsebtn" >-->
-                            <!--                                    <i class="tml-icon tml-praise"></i>-->
-                            <!--                                    &lt;!&ndash; 点击后状态 class="tml-icon tml-praise-click" &ndash;&gt;-->
-                            <!--                                </a>-->
-                            <!--                                &lt;!&ndash;收藏&ndash;&gt;-->
-                            <!--                                <a href="javascript:;" id="collectionbtn">-->
-                            <!--                                    <i  class="tml-icon tml-CollectionisShow"></i>-->
+                            <p class="study-num">{{model.courseName}}-{{playV.courseChapterName}}</p>
+                            <!--<div style="flex:1;"></div>-->
+                            <!--<div class="flex html-Collection" style="margin-right: 30px; ">-->
+                                <!--&lt;!&ndash;访问次数&ndash;&gt;-->
+                                <!--<a href="javascript:;">-->
+                                    <!--<i>  </i>-->
+                                    <!--&lt;!&ndash; 点击后状态 class="tml-icon tml-praise-click" &ndash;&gt;-->
+                                <!--</a>-->
+                                <!--&lt;!&ndash;点赞&ndash;&gt;-->
+                                <!--<a href="javascript:;" id="prainsebtn" >-->
+                                    <!--<i class="tml-icon tml-praise"></i>-->
+                                    <!--&lt;!&ndash; 点击后状态 class="tml-icon tml-praise-click" &ndash;&gt;-->
+                                <!--</a>-->
+                                <!--&lt;!&ndash;收藏&ndash;&gt;-->
+                                <!--<a href="javascript:;" id="collectionbtn">-->
+                                    <!--<i  class="tml-icon tml-CollectionisShow"></i>-->
 
-                            <!--                                    &lt;!&ndash; 点击后状态 class="tml-icon tml-Collection-click" &ndash;&gt;-->
-                            <!--                                </a>-->
-                            <!--                            </div>-->
-                            <div class="public-share">
-                                <div id="share-2"></div>
-                            </div>
+                                    <!--&lt;!&ndash; 点击后状态 class="tml-icon tml-Collection-click" &ndash;&gt;-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<div class="public-share">-->
+                                <!--<div id="share-2"></div>-->
+                            <!--</div>-->
                         </div>
                         <!--用iframe嵌入网页的方式播放视频-->
                         <iframe v-if="playV && playV.courseChapterType==2" class="video-iframe"
@@ -86,25 +85,34 @@
                         <div class="develop-detail-content-left">
                             <!--tab导航-->
                             <ul class="public-content-header-right-ul public-tab-list tab-title">
-                                <li class="on"><a href="javascript:;" @click="chancetabcontent(0);">教程介绍</a></li>
+                                <li class="on"><a href="javascript:;" @click="chancetabcontent(0);">课程介绍</a></li>
 
                             </ul>
 
                             <!--视频简介 start-->
                             <div class="tab-content" v-show="isShow[0]">
                                 <div>
-                                    <!--视频教程内容介绍-->
+                                    <!--内容-->
                                     <div v-html="HTMLEncode(model.courseDes)"></div>
-                                    <!--视频教程附件-->
-                                    <div class="file-download">
-                                        <p>相关资料</p>
-                                    </div>
                                 </div>
 
                             </div>
                             <!--视频简介 end-->
 
-                            <!--视频评论 moxiaoing添加 start-->
+                            <!--视频评论 start-->
+                            <ul class="public-content-header-right-ul public-tab-list tab-title">
+                                <li class="on"><a href="javascript:;" @click="chancetabcontent(0);">课程评论</a></li>
+
+                            </ul>
+
+                            <!-- 评论列表-->
+                            <div class="tab-content" v-show="isShow[0]">
+                                <div>
+                                    <!--内容-->
+                                    <span>功能开发中……</span>
+                                </div>
+
+                            </div>
 
                             <!--视频评论 end-->
 
@@ -118,8 +126,8 @@
                             <div class="user-message">
                                 <img src="./assets/img/user/user01png.png" alt="">
                                 <div>
-                                    <p>梁山独龙 Java工程师</p>
-                                    <p>观看次数：3545次</p>
+                                    <p>梁山独龙</p>
+                                    <p>资深架构师</p>
                                 </div>
                                 <a class="follow-user" href="javascript:;">+关注</a>
                             </div>
@@ -128,12 +136,14 @@
                             </div>
                         </div>
 
-                        <div class="develop-detail-content-right" v-if="playVLen>1">
+                        <div  class="develop-detail-content-right" v-show="playVLen>1">
                             <p>课程目录</p>
-                            <div class="right-item" v-for="item in model.courseChapterList" @click="view(item)">
-                                <div :class="['item-info',{color:playV.courseChapterId==item.courseChapterId}]">
-                                    <div class="gray3"><span class="free">P{{item.courseChapterSort}}</span>
-                                        {{item.courseChapterName}}
+                            <div :class="{nuiScroll:model.courseChapterList.length>8}">
+                                <div class="right-item" v-for="item in model.courseChapterList" @click="view(item)">
+                                    <div :class="['item-info',{color:playV.courseChapterId==item.courseChapterId}]">
+                                        <div class="gray3"><span class="free">P{{item.courseChapterSort}}</span>
+                                            {{item.courseChapterName}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -157,8 +167,8 @@
     /**
      * vue对象示例化
      */
-    var ovue = new Vue({
-        el: "#web-page",
+    let vue = new Vue({
+        el: "#app",
         data: {
             isShow: [1, 2],
             //模型
@@ -169,6 +179,7 @@
                 courseName: null,
                 courseImg: null,
                 courseDes: null,
+                studyNumber:0,
                 //章节列表（如：视频）
                 courseChapterList: [],
                 //知识点
@@ -185,9 +196,12 @@
             //相关视频
             params: null
         },
+        //初始化完毕后
         created() {
             this.init();
+
         },
+
         methods: {
             init() {
                 //取参数：课程id
@@ -220,6 +234,7 @@
                                 //从model.courseChapterList中找对应的播放视频
                                 let viewIndexItem = this.model.courseChapterList.find(item => item.courseChapterId == this.playV.courseChapterId);
                                 this.view(viewIndexItem);
+
                             }
                         }
                         this.params = `/ralationCourse?size=5&courseTypeId=${this.model.courseTypeId}&courseId=${this.model.courseId}`;
@@ -251,8 +266,6 @@
             }
         }
     });
-    //分享
-    socialShare('#share-2', {sites: ['qzone', 'qq', 'weibo', 'wechat', 'facebook']});
 </script>
 </body>
 </html>

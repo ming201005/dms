@@ -83,7 +83,7 @@
                     </ul>
                 </div>
                 <div class="search-box">
-                    <p>共有<span>{{page.total}}</span>个教程</p>
+                    <p>共有<span>{{page.total}}</span>课程</p>
                     <div>
                         <i class="tml-icon tml-top-search"></i>
                         <input v-model="model.keyword" class="searchinput" type="text">
@@ -95,7 +95,7 @@
         <!--列表组件-->
         <video-list-comm ref="list" search="true" :params="params" :load-success="loadSuccess"></video-list-comm>
         <!--分页组件-->
-        <div v-if="params">
+        <div v-if="params" style="text-align: center;margin: 15px 0;">
             <page-comm :current="page.current" :allpage="page.pages" :size="page.size" :total="page.total" :index-page-data="indexPageData"></page-comm>
         </div>
 

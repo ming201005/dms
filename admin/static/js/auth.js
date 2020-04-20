@@ -159,8 +159,8 @@ let Auth = {
             errArr.push("请输入账号！");
         }else if(user.password == null || user.password ==""){
             errArr.push("请输入密码！");
-        }else if(user.password.length<6 || user.password.length>12){
-            errArr.push("密码范围是6~12位数！");
+        }else if(user.password.length<6 || user.password.length>20){
+            errArr.push("密码范围是6~20位数！");
         }
         if(errArr.length>0){
             alert(errArr);

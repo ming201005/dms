@@ -47,6 +47,12 @@
             }
         },
         created(){
+            document.onkeydown = (e)=> {
+                if (e.key=="Enter") {
+                    //敲回车，也支持登录
+                    Auth.login(this.user);
+                }
+            }
             //检测如果登录了，直接进入管理中心
             Auth.gotoManagerCenter(Auth.getToken());
         }

@@ -1,7 +1,7 @@
 //API访问地址
-const GLOBAL_API_URL = "http://localhost:84/web/";
+const GLOBAL_API_URL = "http://niudao.cn:84/web/";
 //图片所在地址,用nginx配置一个资源服务器，指向资源路径
-const BASE_IMG_URL = "http://localhost:83/images/";
+const BASE_IMG_URL = "http://niudao.cn:83/images/";
 
 comm = {
     /**

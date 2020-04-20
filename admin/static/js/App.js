@@ -1,7 +1,7 @@
 //api访问地址，可修改,这里用了nginx做了反向代理指向
-const global_api_url = "http://localhost:84/";
+const global_api_url = "http://niudao.cn:84/";
 //图片所在地址,用nginx配置一个资源服务器，指向资源路径
- const BASE_IMG_URL = "http://localhost:83/images/";
+ const BASE_IMG_URL = "http://niudao.cn:83/images/";
 //后端项目名称
 const htmlPath = "admin";
 

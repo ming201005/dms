@@ -4,50 +4,51 @@
  */
 Vue.component("img-up-comm", {
     template: `
-     <el-form-item label="添加图片" prop="productWeight">
-                        <div class="imgBox" v-if="isCheckImgList">
-                            <!--循环显示图片-->
-                            <div class="imgItem" v-for="(item,index) in isCheckImgList">
-                                <!--图片显示，用背景图的方式显示-->
-                                <div class="imageShow"
-                                     :style="{'backgroundImage': 'url(' + BASE_IMG_URL+item.resourceName + ')'}">
-                                    <!--当被选中时，上边出现阴影遮住效果-->
-                                    <div>
-                                        <div style="height: 20px;">
-                                            <span size="mini" @click="App.delFileByIndex(index,isCheckImgList)"
-                                                  class="el-icon-delete showHide"></span>
-                                            <!--<span size="mini" @click="viewImg(BASE_IMG_URL+item.resourceName)" class="el-icon-view showHide"></span>-->
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!--添加图片的按钮-->
-                            <div class="newFile" v-if="checkNumberMax>isCheckImgList.length" @click="openWin">
-                                <span class="addNewFile el-icon-plus">
-                                    <p style="font-size: 12px;">添加图片</p>
-                                </span>
-                            </div>
+     <el-form-item :label="labelTextShow" prop="productWeight">
+        <div class="imgBox" v-if="isCheckImgList">
+            <!--循环显示图片-->
+            <div class="imgItem" v-for="(item,index) in isCheckImgList">
+                <!--图片显示，用背景图的方式显示-->
+                <div class="imageShow"
+                     :style="{'backgroundImage': 'url(' + BASE_IMG_URL+item.resourceName + ')'}">
+                    <!--当被选中时，上边出现阴影遮住效果-->
+                    <div>
+                        <div style="height: 20px;">
+                            <span size="mini" @click="App.delFileByIndex(index,isCheckImgList)"
+                                  class="el-icon-delete showHide"></span>
+                            <!--<span size="mini" @click="viewImg(BASE_IMG_URL+item.resourceName)" class="el-icon-view showHide"></span>-->
                         </div>
-                        <!--弹窗选择图片-->
-                        <el-dialog title="选择图片"
-                                   width="80%"
-                                   top="25px"
-                                   center
-                                   :visible.sync="dialogFormVisible">
+                    </div>
 
-                                  <!--弹窗，调用资源组件-->
-                                  <template>
-                                  <resource-comm ref="myResource" :from-page="fromPage" 
-                                                 :check-number-max="checkNumberMax" 
-                                                 :hash-check-num="hashCheckNum"
-                                                 :dialog-form-visible="dialogFormVisible"
-                                                 :on-selected-img="onSelectedImg"
-                                                 @close-win="closeWin">
-                                  </resource-comm>
-                                  </template>
-                        </el-dialog>
-                    </el-form-item>
+                </div>
+            </div>
+            <!--添加图片的按钮-->
+            <div class="newFile" v-if="checkNumberMax>isCheckImgList.length" @click="openWin">
+                <span class="addNewFile el-icon-plus">
+                    <p style="font-size: 12px;">添加图片</p>
+                </span>
+            </div>
+        </div>
+        <!--弹窗选择图片-->
+        <el-dialog title="选择图片"
+                   width="80%"
+                   top="25px"
+                   center
+                   :visible.sync="dialogFormVisible">
+
+                  <!--弹窗，调用资源组件-->
+                  <template>
+                  <resource-comm ref="myResource" 
+                                 :from-page="fromPage" 
+                                 :check-number-max="checkNumberMax" 
+                                 :hash-check-num="hashCheckNum"
+                                 :dialog-form-visible="dialogFormVisible"
+                                 :on-selected-img="onSelectedImg"
+                                 @close-win="closeWin">
+                  </resource-comm>
+                  </template>
+        </el-dialog>
+    </el-form-item>
     
     `,
     data(){
@@ -62,6 +63,7 @@ Vue.component("img-up-comm", {
     },
     //支持的参数
     props:{
+        labelText:null,
         //页面来源
         fromPage:null,
         //最多允许选中图片张数
@@ -75,12 +77,18 @@ Vue.component("img-up-comm", {
         }
     },
 
-    //数据初始化
+    //数据监听
     watch:{
         //监听isCheckImgList是否有变化，如果有变化，让hashCheckNum取到值
         isCheckImgList(){
             console.log("hashCheckNum被监听：", this.isCheckImgList)
             this.hashCheckNum = this.isCheckImgList? this.isCheckImgList.length : 0;
+        }
+    },
+    //计算属性
+    computed:{
+        labelTextShow(){
+            return (this.labelText !=undefined && this.labelText !=null)? this.labelText:"添加图片";
         }
     },
     //定义的一些方法

@@ -16,7 +16,7 @@ public class FileUtil {
 
     //文件存放地址，暂时放本地
     //合理的做法是：搭建一个资源服务器。
-    public static final  String IMG_PATH = "D:\\codingstudy\\codingstudy-app\\resource\\images\\";
+    public static final  String IMG_PATH = "/usr/local/nginx/html/resource/images/";
     //public static final  String IMG_PATH = "http://localhost:81/images/";
 
     /**
