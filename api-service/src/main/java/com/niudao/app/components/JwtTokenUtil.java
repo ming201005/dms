@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
     //私钥
-    private static final String SECRET_KEY = "coding-study";
+    private static final String SECRET_KEY = "ASFG544TYTYGHFFD99343JUJJ";
 
     // 过期时间 毫秒,设置默认1周的时间过期
     private  static final long EXPIRATION_TIME = 3600000L * 24*7;
