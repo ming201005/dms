@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>登录模块</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/signin.css" rel="stylesheet">
+
+    <script src="static/js/vue.min.js"></script>
+    <script src="static/js/axios.min.js"></script>
+    <script src="static/eui/index.js"></script>
+
+    <script src="static/js/App.js"></script>
+    <script src="static/js/auth.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2 class="sys-name">资料管理系统(DMS-V1.0)</h2>
+    <div class="form-signin">
+        <h3 class="form-signin-heading">系统登录</h3>
+        <p>
+            <label for="username" class="sr-only">用户名：</label>
+            <input type="text" id="username"  v-model="user.username" class="form-control" >
+        </p>
+        <p>
+            <label for="password" class="sr-only">密码：</label>
+            <input type="password" id="password"  v-model="user.password"  class="form-control">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" onclick="Auth.login(vue.$data.user)">登录</button>
+    </div>
+
+</div>
+<script>
+    let vue = new Vue({
+        el:"#app",
+        data:{
+            user:{
+                username:null,
+                password:null
+            }
+        },
+        created(){
+            document.onkeydown = (e)=> {
+                if (e.key=="Enter") {
+                    //敲回车，也支持登录
+                    Auth.login(this.user);
+                }
+            }
+            //检测如果登录了，直接进入管理中心
+            Auth.gotoManagerCenter(Auth.getToken());
+        }
+    });
+</script>
+</body>
+</html>

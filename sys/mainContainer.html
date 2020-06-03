@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/eui/element-ui.css">
+
+    <script src="static/js/vue.min.js"></script>
+    <script src="static/js/axios.min.js"></script>
+    <script src="static/eui/index.js"></script>
+
+    <script src="static/js/App.js"></script>
+    <script src="static/js/auth.js"></script>
+    <script src="static/js/checkIsLogin.js"></script>
+    <script src="static/js/RefreshComponent.js"></script>
+
+    <style>
+        body {
+            font-size: 14px;
+            color: #606266;
+        }
+        .main{
+            display: flex;
+            justify-content:flex-start;
+        }
+        /*左侧*/
+        .mianLeft{
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 70%;
+        }
+        .mianLeft_row{
+            display: flex;
+            flex-wrap: nowrap;
+            width: 100%;
+            height: 110px;
+        }
+        .mianLeft_dai {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content:center;
+            align-items:center;
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 10px;
+            border-radius: 5px;
+            width: 60%;
+        }
+        .mianLeft_dai span {
+            display: flex;
+            flex-direction: column;
+            text-align:center;
+            vertical-align:middle;
+            align-content: center;
+            height: 95%;
+            width: 100%;
+            margin-top: 10px;
+         }
+        .mianLeft_dai_num {
+            width: 100%;
+            line-height: 50px;
+            text-align:center;
+            vertical-align:middle;
+            /*background-color: #f5f7fa;*/
+            color: dodgerblue;
+            border-radius:50%;
+            font-size: 20px;
+            /*margin-left: 30px;*/
+        }
+        .mianLeft_dai_des {
+            width: 100%;
+            color: #8D8D8D;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .mianLeft_msg{
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 10px;
+            border-radius: 5px;
+            width: 40%;
+            margin-left: 10px;
+        }
+        .mianLeft_cy{
+            display: flex;
+            justify-content: space-around;
+            align-items:center;
+            flex-wrap: wrap;
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            height: 128px;
+            margin-top: 10px;
+        }
+        .mianLeft_cy_title{
+            width: 100%;
+            height: 26px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .mianLeft_cy_box{
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+        .mianLeft_cy_box li{
+            font-size: 58px;
+            color: #1E9FFF;
+            text-align:center;
+        }
+        .mianLeft_cy_box span{
+            color: #8D8D8D;
+            font-size: 15px;
+            margin-top: 10px;
+            text-align:center;
+            vertical-align:middle;
+        }
+
+
+        .mianLeft_yx {
+            width: 100%;
+            height: 460px;
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 2px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+
+        /*右侧*/
+        .mianR{
+            width: 27.5%;
+            margin-left: 10px;
+        }
+        .box1 {
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            height: 250px;
+            margin-bottom: 10px;
+        }
+        .box2 {
+            width: 100%;
+            height: 440px;
+            box-shadow: 0 0 3px 0px #c0c4cced;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <refresh-comm></refresh-comm>
+    <h2 style="margin-top: 200px;text-align: center">{{App.getSysName()}}</h2>
+</div>
+<script>
+    let vue = new Vue({
+        el: "#app"
+    });
+</script> 
+</body>
+</html>

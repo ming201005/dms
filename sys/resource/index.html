@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资料管理</title>
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+    <script src="../static/js/PageComm.js"></script>
+    <script src="../static/js/organization-comm.js"></script>
+
+    <link href="../static/eui/element-ui.css" rel="stylesheet">
+    <link href="../static/css/template.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/css/page.css" rel="stylesheet">
+</head>
+<body>
+<div id="app" style="display: flex;">
+    <refresh-comm></refresh-comm>
+    <!--组织组件-->
+    <organization-comm 
+        :load-all-data="getList"
+        :load-index-data="showWin">
+    </organization-comm>
+
+    <div style="width: 100%">
+        <!--引用data-list-comm组件-->
+        <data-list-comm ref="myList"
+                        :list-api-url="url"
+                        :delete-api-url="url+'/deleteFile'"
+                        row-id-key="userId"
+                        :on-add-new-form="onAddNewFormHandler"
+                        is-page="true"
+                        @on-delete-success="onDeleteSuccess"
+                        :on-page="onPage"
+                        ref-parent="true">
+            
+            <!--自定义表头,覆盖默认模板-->
+            <template slot="dataHead">
+                <tr class="h">
+                    <td style="text-align: center;width: 18%">院系</td>
+                    <td style="text-align: center;width: 10%">资料分类</td>
+                    <td style="text-align: center; width: 35%">资料名称</td>
+                    <td style="text-align: center;width: 8%">上传人</td>
+                    <td style="text-align: center;width: 12%">上传时间</td>
+                    <td style="text-align: center;width: 100px;">操作</td>
+                </tr>
+            </template>
+
+            <template>
+                <tr v-if="modelList !=null && modelList.length>0"
+                    v-for="(item,index) in modelList">
+                    <td>{{item.organizationName}} </td>
+                    <td>{{item.resourceTypeName}}</td>
+                    <td>
+                        <span><button :class="item.resourceState==1? 'button action': 'button'" @click="setPublic(item)">{{item.resourceState==1?'公开':'私人'}}</button></span>
+                        <span>{{item.resourceName}}</span>
+                    </td>
+                    <td style="text-align: center;">{{item.upUser}}</td>
+                    <td style="text-align: center;">{{item.createTime |formatDate}}</td>
+                    <td style="text-align: center;">
+                        <!-- <button @click="onlineView(item)">浏览</button> -->
+                        
+                        <button @click="downLoad(item)">下载</button>
+                        <button @click="onEditFormHandler(item)">编辑</button>
+                        <button @click="del(item)">删除</button>
+                    </td>
+                </tr>
+            </template>
+        </data-list-comm>
+
+        <!--分页组件-->
+        <div style="float:right;margin-top: 10px;">
+            <page-comm :current="page.current" 
+                    :allpage="page.pages" 
+                    :size="page.size" 
+                    :total="page.total"
+                    :index-page-data="indexPageData"></page-comm>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            url: global_api_url + "resource",
+            //数据列表
+            modelList: [],
+            //--------------------------------------------------
+            //组织
+            organizationId:"",
+            organizationName:"",
+            //--------------------------------------------------
+            //分页对象
+            page: {
+                current: 1,
+                size: 10,
+                pages: 0,
+                total: 0
+            }
+        },
+        created(){
+             
+        },
+        //过滤器
+        filters: {
+            
+            /**
+             * 时间格式化
+             */
+             formatDate: function (time) {
+                if (time != null && time != "") {
+                    var date = new Date(time);
+                    return App.formatDate(date, "yyyy-MM-dd");
+                } else {
+                    return "";
+                }
+            }
+        },
+
+        methods: {
+            
+            /**
+             * 如果独立运行，请放在mounted方法内执行。
+             * 此处是组织组件的钩子
+             */
+             async getList(url) {
+                console.log("2-----getList,here.....................")
+                //此方法内有异步，必须设置等待
+                await this.$refs.myList.getModelList(url);
+                this.modelList = this.$refs.myList.modelList;
+                console.log("4------modelList modelList======", this.modelList);
+
+            },
+
+            /**
+             * 加载右边数据,是组织组件的钩子
+             */ 
+            showWin(item){
+                this.organizationId = item.id;
+                this.organizationName = item.name;
+                console.log("item===>>",item,"organizationId=",this.organizationId);
+                this.indexPageData(1);
+            },
+
+            /**
+             * 分页，是data-list-comm组件钩子
+             */ 
+            onPage(page) {
+                this.page = page;
+                console.log("3--------course page======", this.page);
+            },
+
+            //读取当前页数据，分页组件钩子
+            indexPageData(index) {
+                this.page.current = index;
+                console.log("1----indexPageData  index===============>", this.page)
+                
+                let url = this.url + '?size=' + this.page.size + '&current=' + this.page.current
+                if(this.organizationId != null && this.organizationId !=""){
+                    url += "&organizationId="+this.organizationId;
+                }
+                
+                console.log("indexPageData url====>>",url);
+                
+                this.getList(url);
+            },
+
+            /**
+             * 挂载新建表单方法，列表组件新增钩子
+             */
+            onAddNewFormHandler() {
+                if(this.organizationId){
+                    parent.app.addTab("上传资料("+this.organizationName+")", "./resource/resource-form.html?organizationId="+this.organizationId+"&organizationName="+this.organizationName);
+                }
+            },
+
+            /**
+             * 挂载获得编辑表单方法，列表组件编辑行钩子
+             */
+            onEditFormHandler(item) {
+                if(item){
+                    parent.app.addTab("修改资料("+item.resourceName+"-"+item.organizationName+")", "./resource/resource-form.html?id="+item.id+"&organizationId="+item.organizationId+"&organizationName="+item.organizationName);
+                }
+            },
+
+            /**
+             * 删除数据，列表组件删除行钩子
+             * @param frontendMenuId
+             */
+             del(item) {
+                //直接调用子组件方法
+                let params = "?idList=" + item.id+"&fileName="+item.pathResourceName;
+                this.$refs.myList.del(item,params);
+            },
+
+            /**
+             * 删除成功时调用
+             */ 
+            onDeleteSuccess(){
+                //重新加载页面
+                this.indexPageData(1);
+            },
+
+            /**
+             * 资料下载
+             */ 
+            downLoad(item){
+                let url = this.url+"/downLoad";
+                let data = {  
+                    params:{filename:item.pathResourceName},
+                    //一定要写
+                    responseType: `arraybuffer` 
+
+                }
+                axios.get(url,data).then(res => {
+                    if (res.status == 200) {
+                        //文件类型
+                        let docType = "";
+                        switch (item.fileSuffix) {
+                            case '.doc' || '.docx' :
+                                docType = 'application/msword;charset=utf-8';
+                                break;
+                            case '.xls' || '.xlsx' :
+                                docType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8';
+                                break;
+                            case '.pdf' :
+                                docType = 'application/pdf;charset=utf-8';
+                                break;
+                            default:
+                                break;
+                        }
+                        let blob = new Blob([res.data], {type:  docType});
+                        let objectUrl = URL.createObjectURL(blob);
+                        let link = document.createElement("a");
+                        //下载资料后的名字
+                        let fname = item.resourceName; 
+                        link.href = objectUrl;
+                        link.setAttribute("download", fname);
+                        document.body.appendChild(link);
+                        link.click();
+                        this.$message.success("下载成功");
+                    } else {
+                        this.$message.error("下载失败");
+                    }
+                }).catch(err=>{
+                    this.$message.error("下载失败："+err);
+                });
+            },
+
+            /**
+             * 在线浏览
+             */ 
+            onlineView(item){
+                //目前支持pdf预览
+                //TEST
+                //window.open("http://localhost:88/v/web/viewer.html?file=http://localhost:89/13/fc0e0d5979004237bebe73dbaa3a772f.pdf")
+            },
+
+            /**
+             * 设置公开
+             */ 
+            setPublic(item){
+                let state = item.resourceState == 0 ? 1:0;
+                let url = this.url+`/setpublic/${item.id}/${state}`;
+                axios.get(url).then(rs => {
+                    if (rs.status == 200) {
+                        if(rs.data.code == 0){
+                           this.$message.success("设置成功");
+                           item.resourceState = state;
+                        }else{
+                           this.$message.error(rs.data.msg); 
+                        }
+                    }else{
+                        this.$message.error("设置失败");
+                    }
+                }).catch(err=>{
+                    this.$message.error("设置失败："+err);
+                });
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/eui/element-ui.css">
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+
+    <link rel="stylesheet" href="../static/css/template.css">
+</head>
+<body>
+<div id="app">
+    <refresh-comm></refresh-comm>
+    <!--引用form-box-comm组件-->
+    <form-box-comm ref="myForm"
+                   :form-type="1"
+                   :box-title="boxTitle"
+                   :add-api-url="url"
+                   :edit-api-url="url"
+                   :model="model"
+                   :id-key="model.roleId"
+                   :on-success="successHandler">
+
+        <!--添加自己的元素-->
+        <template>
+            <div class="item">
+                <label for="roleName">角色名称：</label>
+                <input id="roleName" v-model="model.roleName">
+                <span>新建时，自动加前缀“ROLE_” 。 </span>
+            </div>
+
+            <div class="item">
+                <label for="description">说明：</label>
+                <input id="description" v-model="model.description">
+            </div>
+        </template>
+        <!--添加自己的元素 结束-->
+    </form-box-comm>
+
+    <!--引用data-list-comm组件-->
+    <data-list-comm ref="myList"
+                    :list-api-url="url"
+                    :delete-api-url="url"
+                    :model-attr="modelAttr"
+                    row-id-key="roleId"
+                    :on-add-new-form="onAddNewFormHandler"
+                    :on-edit-form="onEditFormHandler"
+    ></data-list-comm>
+
+</div>
+<script>
+
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            boxTitle: '新增角色',
+            url: global_api_url + "sysRoleTable",
+
+            //表单的对象
+            // 表单的对象不一定和列表表单字段一样，所以单独定义
+            model: {
+                roleId: null,
+                roleName: null,
+                description: null
+            },
+
+            //列表的表单头，支持的定义格式如下：
+            modelAttr: [
+                {
+                    display: '编码',
+                    attribute: 'roleId'
+                },
+                {
+                    display: '角色名称',
+                    attribute: 'roleName'
+                },
+                {
+                    display: '描述',
+                    attribute: 'description'
+                }]
+        },
+
+        methods: {
+            /**
+             * 挂载表单保存数据前，验证方法
+             * 这个方法必须有true/false返回值
+             */
+            // formValidateHandler(model) {
+            //     //console.log(model);
+            //     if(model.name !=null && model.name !=""){
+            //         return true;
+            //     }else {
+            //         alert("请输入用户名称！");
+            //         return false;
+            //     }
+            // },
+
+            /**
+             * 数据保存成功后执行
+             */
+            successHandler(data) {
+                //console.log(data);
+                this.$refs.myList.getModelList();
+                this.$refs.myForm.closeForm();
+            },
+
+            /**
+             * 挂载新建表单方法
+             */
+            onAddNewFormHandler() {
+                //恢复原样
+                this.model = {};
+                //打开窗口
+                this.$refs.myForm.showForm();
+                this.boxTitle = '新增角色';
+            },
+
+            /**
+             * 挂载获得编辑表单方法
+             */
+            onEditFormHandler(row) {
+                //打开窗口
+                this.$refs.myForm.showForm();
+                this.boxTitle = `正在修改[${row.roleName}]`;
+                //赋值
+                this.model = row;
+            },
+        }
+    });
+
+</script>
+</body>
+</html>

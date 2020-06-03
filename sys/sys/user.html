@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+    <script src="../static/js/PageComm.js"></script>
+    <script src="../static/js/organization-comm.js"></script>
+
+    <link href="../static/eui/element-ui.css" rel="stylesheet">
+    <link href="../static/css/template.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/css/page.css" rel="stylesheet">
+</head>
+<body>
+<div id="app" style="display: flex;">
+    <refresh-comm></refresh-comm>
+    <organization-comm 
+        :load-all-data="getList"
+        :load-index-data="showWin"></organization-comm>
+
+    <div style="width: 100%">
+        <!--引用data-list-comm组件-->
+        <data-list-comm ref="myList"
+                        :list-api-url="url"
+                        :delete-api-url="url"
+                        row-id-key="id"
+                        :on-add-new-form="onAddNewFormHandler"
+                        is-page="true"
+                        :on-page="onPage"
+                        ref-parent="true"
+                        @on-delete-success="onDeleteSuccess">
+            
+            <!--自定义表头,覆盖默认模板-->
+            <template slot="dataHead">
+                <tr class="h">
+                    <td style="text-align: center;width: 23%">院系</td>
+                    <td style="text-align: center;width: 10%">类型</td>
+                    <td style="text-align: center; width: 15%">登录账号</td>
+                    <td style="text-align: center;width: 15%">用户名</td>
+                    <td style="text-align: center;width: 8%">性别</td>
+                    <td style="text-align: center;width: 15%">角色</td>
+                    <td style="text-align: center;">操作</td>
+                </tr>
+            </template>
+
+            <template>
+                <tr v-if="modelList !=null && modelList.length>0"
+                    v-for="(item,index) in modelList">
+                    <td>{{item.organization? item.organization.name:''}}</td>
+                    <td>{{item.userType ==1?'学生':'非学生'}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.userShow}}</td>
+                    <td>{{item.userSex}}</td>
+                    <td>
+                        <div class="item" v-if="item.roleList" v-for="roleItem in item.roleList">
+                            {{roleItem.roleName |roleShow}}
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <button @click="onEditFormHandler(item)">编辑</button>
+                        <button @click="del(item)">删除</button>
+                    </td>
+                </tr>
+            </template>
+        </data-list-comm>
+
+        <!--分页组件-->
+        <div style="float:right;margin-top: 10px;">
+            <page-comm :current="page.current" 
+                    :allpage="page.pages" 
+                    :size="page.size" 
+                    :total="page.total"
+                    :index-page-data="indexPageData"></page-comm>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            url: global_api_url + "user",
+            //数据列表
+            modelList: [],
+            //--------------------------------------------------
+            //组织
+            organizationId:"",
+            organizationName:"",
+            //--------------------------------------------------
+            //分页对象
+            page: {
+                current: 1,
+                size: 10,
+                pages: 0,
+                total: 0
+            }
+        },
+        //过滤器
+        filters: {
+            /**
+             *角色显示
+             */
+            roleShow: function (val) {
+                if (val != null && val != "") {
+                    return val.replace("ROLE_","");
+                } else {
+                    return "";
+                }
+            }
+        },
+
+        methods: {
+            
+            /**
+             * 如果独立运行，请放在mounted方法内执行。
+             * 此处是组织组件的钩子
+             */
+             async getList(url) {
+                console.log("2-----getList,here.....................")
+                //此方法内有异步，必须设置等待
+                await this.$refs.myList.getModelList(url);
+                this.modelList = this.$refs.myList.modelList;
+                console.log("4------modelList modelList======", this.modelList);
+
+            },
+
+            /**
+             * 加载右边数据,是组织组件的钩子
+             */ 
+            showWin(item){
+                this.organizationId = item.id;
+                this.organizationName = item.name;
+                console.log("item===>>",item,"organizationId=",this.organizationId);
+                this.indexPageData(1);
+            },
+
+            /**
+             * 分页，是data-list-comm组件钩子
+             */ 
+            onPage(page) {
+                this.page = page;
+                console.log("3--------course page======", this.page);
+            },
+
+            //读取当前页数据，分页组件钩子
+            indexPageData(index) {
+                this.page.current = index;
+                console.log("1----indexPageData  index===============>", this.page)
+                let url = this.url + '?size=' + this.page.size + '&current=' + this.page.current
+                if(this.organizationId != null && this.organizationId !=""){
+                    url += "&organizationId="+this.organizationId;
+                }
+                
+                console.log("indexPageData url====>>",url);
+                
+                this.getList(url);
+            },
+
+            /**
+             * 挂载新建表单方法，列表组件新增钩子
+             */
+            onAddNewFormHandler() {
+                if(this.organizationId){
+                    parent.app.addTab("新增用户("+this.organizationName+")", "./sys/user-form.html?organizationId="+this.organizationId+"&organizationName="+this.organizationName);
+                }else{
+                    alert("先选一个院系再加人")
+                }
+            },
+
+            /**
+             * 挂载获得编辑表单方法，列表组件编辑行钩子
+             */
+            onEditFormHandler(item) {
+                if(item){
+                    parent.app.addTab("修改用户("+item.organization.name+"-"+item.name+")", "./sys/user-form.html?id="+item.id);
+                }
+            },
+
+            /**
+             * 删除数据，列表组件删除行钩子
+             * @param frontendMenuId
+             */
+             del(item) {
+                //直接调用子组件方法
+                this.$refs.myList.del(item);
+            },
+            onDeleteSuccess(item){
+                this.$message.success("删除成功！");
+                this.indexPageData(1);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d92c0eb5-9110-4b3b-a5be-4a857d00a460" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectId" id="1afBCFzEXp5bKls9cSyn2woaqwY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.26656848" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/admin/static/js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sys/sys" />
+      <recent name="$PROJECT_DIR$/sys/yuanxi" />
+      <recent name="$PROJECT_DIR$/admin/sys" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AppApplication">
+    <configuration name="com.dms.app.vo in api-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dms.app.vo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.dms.app.vo" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="api" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="api" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="api-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dms.app.AppApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.com.dms.app.vo in api-service" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpringMvcView">
+    <option name="showModules" value="false" />
+    <option name="showControllers" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d92c0eb5-9110-4b3b-a5be-4a857d00a460" name="Default Changelist" comment="" />
+      <created>1587116639241</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587116639241</updated>
+      <workItem from="1587116643316" duration="1552000" />
+      <workItem from="1587118220247" duration="1112000" />
+      <workItem from="1587120392058" duration="1560000" />
+      <workItem from="1587123705677" duration="484000" />
+      <workItem from="1587135525710" duration="1424000" />
+      <workItem from="1587217731847" duration="1308000" />
+      <workItem from="1587272600413" duration="1062000" />
+      <workItem from="1587282443705" duration="1145000" />
+      <workItem from="1587299422848" duration="1366000" />
+      <workItem from="1587302324908" duration="1439000" />
+      <workItem from="1587306472473" duration="1832000" />
+      <workItem from="1587308443739" duration="4301000" />
+      <workItem from="1587344461073" duration="30344000" />
+      <workItem from="1587397040765" duration="1445000" />
+      <workItem from="1587398851649" duration="887000" />
+      <workItem from="1587431321055" duration="678000" />
+      <workItem from="1587433238496" duration="308000" />
+      <workItem from="1587451405447" duration="137000" />
+      <workItem from="1587451826397" duration="216000" />
+      <workItem from="1587452325962" duration="43000" />
+      <workItem from="1587454692579" duration="1487000" />
+      <workItem from="1587456656081" duration="1475000" />
+      <workItem from="1587459264757" duration="258000" />
+      <workItem from="1587459992584" duration="239000" />
+      <workItem from="1587460251790" duration="1054000" />
+      <workItem from="1587462027980" duration="1727000" />
+      <workItem from="1587463849503" duration="2100000" />
+      <workItem from="1587468541888" duration="523000" />
+      <workItem from="1587469085587" duration="1222000" />
+      <workItem from="1587470360136" duration="132000" />
+      <workItem from="1587470498375" duration="1629000" />
+      <workItem from="1587472175810" duration="1733000" />
+      <workItem from="1587474090864" duration="1731000" />
+      <workItem from="1587475964374" duration="396000" />
+      <workItem from="1587476367608" duration="1209000" />
+      <workItem from="1587477865654" duration="313000" />
+      <workItem from="1587478235719" duration="994000" />
+      <workItem from="1587480531321" duration="18672000" />
+      <workItem from="1587540504849" duration="1531000" />
+      <workItem from="1587542118798" duration="1272000" />
+      <workItem from="1587543417461" duration="80000" />
+      <workItem from="1587543776604" duration="6000" />
+      <workItem from="1587544013982" duration="250000" />
+      <workItem from="1587544471314" duration="1454000" />
+      <workItem from="1587615599895" duration="1595000" />
+      <workItem from="1587636191499" duration="1417000" />
+      <workItem from="1587638025965" duration="913000" />
+      <workItem from="1587644022982" duration="865000" />
+      <workItem from="1587692910619" duration="1533000" />
+      <workItem from="1587718003710" duration="1073000" />
+      <workItem from="1587755968324" duration="584000" />
+      <workItem from="1587758329890" duration="205000" />
+      <workItem from="1587788112141" duration="1811000" />
+      <workItem from="1587793069704" duration="1660000" />
+      <workItem from="1587794847298" duration="1472000" />
+      <workItem from="1587799194924" duration="1109000" />
+      <workItem from="1588042223898" duration="187000" />
+      <workItem from="1588045747521" duration="415000" />
+      <workItem from="1588055801772" duration="4359000" />
+      <workItem from="1588072171089" duration="481000" />
+      <workItem from="1588163019134" duration="4173000" />
+      <workItem from="1588382350391" duration="246000" />
+      <workItem from="1588392048797" duration="382000" />
+      <workItem from="1588392598233" duration="424000" />
+      <workItem from="1588394456285" duration="245000" />
+      <workItem from="1588395621121" duration="10756000" />
+      <workItem from="1588422028987" duration="9880000" />
+      <workItem from="1588642523733" duration="14556000" />
+      <workItem from="1588737483092" duration="16747000" />
+      <workItem from="1590668900726" duration="4122000" />
+      <workItem from="1591148441058" duration="383000" />
+    </task>
+    <task id="LOCAL-00001" summary="牛刀知识共享平台-ssm版">
+      <created>1587117748970</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587117748970</updated>
+    </task>
+    <task id="LOCAL-00002" summary="牛刀知识共享平台-ssm版">
+      <created>1587121473422</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587121473422</updated>
+    </task>
+    <task id="LOCAL-00003" summary="readme">
+      <created>1587136064437</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587136064438</updated>
+    </task>
+    <task id="LOCAL-00004" summary="readme">
+      <created>1587136250169</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587136250169</updated>
+    </task>
+    <task id="LOCAL-00005" summary="readme">
+      <created>1587136390223</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587136390223</updated>
+    </task>
+    <task id="LOCAL-00006" summary="readme">
+      <created>1587136590098</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1587136590098</updated>
+    </task>
+    <task id="LOCAL-00007" summary="readme">
+      <created>1587136669863</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587136669863</updated>
+    </task>
+    <task id="LOCAL-00008" summary="小问题调整">
+      <created>1587282534990</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587282534990</updated>
+    </task>
+    <task id="LOCAL-00009" summary="调整课程上传、富文本、前端等">
+      <created>1587397090862</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587397090862</updated>
+    </task>
+    <task id="LOCAL-00010" summary="调整课程上传、富文本、前端等">
+      <created>1587397226950</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587397226950</updated>
+    </task>
+    <task id="LOCAL-00011" summary="调整课程上传、富文本、前端等">
+      <created>1587397383301</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587397383301</updated>
+    </task>
+    <task id="LOCAL-00012" summary="0、本应用涉及技术点：&#10;   后端：Java、SpringBoot、Mybatis、MybatisPlus、SpringSecuriy、JWT token认证&#10;   前端：HTML、Css、JavaScript、Vue视图层绑定、Vue组件化开发 （此应用是非脚手架多页面应用）；&#10;   数据库：基于角色的权限控制RBAC(Role-Based Access Control)设计思路，扩展思路；&#10;-------------------------------------------------------------------------------&#10;&#10;1、环境说明：&#10;   Java8 以上版本、 SpringBoot2.2以上版本&#10;   Mysql8&#10;&#10;2、项目结构&#10;&#10;  1) doc：相关数据库文档和重要的SQL语句；&#10;  2) api-service：后端项目；&#10;  3）sys：前端HTML项目（可以放在任意位置运行，非脚手架）；&#10;  4）resource：是资料上传后的文件夹。可以放在服务器任意位置。&#10;              如果在本地运行，可以放在任意，但需要设置，文件上传路径（下面讲）；&#10;&#10;3、数据库数据导入和配置&#10;  1）在doc下找到”dms**.sql“，用数据库客户端工具导入mysql8；&#10;  2）打开api-service项目，找到资源配置文件application.properties，修改成自己的连接；&#10;  3）数据库中有数据之后，如何和资料文件连接呢，把resource放在任意位置，但路径保持英文，到&#10;    application.properties中修改file.path，指向自己的路径即可。&#10;&#10;4、前端配置&#10;  打开sys/static/js/App.js，修改第一个参数global_api_url，后端默认是8080，如果没改可以直接运行；&#10;&#10;5、体验，进入系统&#10;  高级 账号：admin、密码：000000&#10;  请不要删除此账号，以及对应的角色，否则系统基础数据重新建立。&#10;6、其他测试账号：&#10;  其他测试账号初始化密码都是：000000&#10;  1）用高级管理员进入系统，找到”系统管理-用户“，可以看到所有用户，以及他的角色&#10;   （现在系统用户、角色、授权已经全部配置好了，请勿改动）；&#10;  2) 院系角色看到本院系的所有资料、能新增、修改本院系所管理的资料分类以及资料；      能添加本院系的用户；&#10;  3）教师、教务处、学办角色类似，只能看个人管理的资料和公共资料；&#10;  4）学生只能看公共的资料；">
+      <created>1591148613414</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1591148613414</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="牛刀知识共享平台-ssm版" />
+    <MESSAGE value="readme" />
+    <MESSAGE value="小问题调整" />
+    <MESSAGE value="调整课程上传、富文本、前端等" />
+    <MESSAGE value="0、本应用涉及技术点：&#10;   后端：Java、SpringBoot、Mybatis、MybatisPlus、SpringSecuriy、JWT token认证&#10;   前端：HTML、Css、JavaScript、Vue视图层绑定、Vue组件化开发 （此应用是非脚手架多页面应用）；&#10;   数据库：基于角色的权限控制RBAC(Role-Based Access Control)设计思路，扩展思路；&#10;-------------------------------------------------------------------------------&#10;&#10;1、环境说明：&#10;   Java8 以上版本、 SpringBoot2.2以上版本&#10;   Mysql8&#10;&#10;2、项目结构&#10;&#10;  1) doc：相关数据库文档和重要的SQL语句；&#10;  2) api-service：后端项目；&#10;  3）sys：前端HTML项目（可以放在任意位置运行，非脚手架）；&#10;  4）resource：是资料上传后的文件夹。可以放在服务器任意位置。&#10;              如果在本地运行，可以放在任意，但需要设置，文件上传路径（下面讲）；&#10;&#10;3、数据库数据导入和配置&#10;  1）在doc下找到”dms**.sql“，用数据库客户端工具导入mysql8；&#10;  2）打开api-service项目，找到资源配置文件application.properties，修改成自己的连接；&#10;  3）数据库中有数据之后，如何和资料文件连接呢，把resource放在任意位置，但路径保持英文，到&#10;    application.properties中修改file.path，指向自己的路径即可。&#10;&#10;4、前端配置&#10;  打开sys/static/js/App.js，修改第一个参数global_api_url，后端默认是8080，如果没改可以直接运行；&#10;&#10;5、体验，进入系统&#10;  高级 账号：admin、密码：000000&#10;  请不要删除此账号，以及对应的角色，否则系统基础数据重新建立。&#10;6、其他测试账号：&#10;  其他测试账号初始化密码都是：000000&#10;  1）用高级管理员进入系统，找到”系统管理-用户“，可以看到所有用户，以及他的角色&#10;   （现在系统用户、角色、授权已经全部配置好了，请勿改动）；&#10;  2) 院系角色看到本院系的所有资料、能新增、修改本院系所管理的资料分类以及资料；      能添加本院系的用户；&#10;  3）教师、教务处、学办角色类似，只能看个人管理的资料和公共资料；&#10;  4）学生只能看公共的资料；" />
+    <option name="LAST_COMMIT_MESSAGE" value="0、本应用涉及技术点：&#10;   后端：Java、SpringBoot、Mybatis、MybatisPlus、SpringSecuriy、JWT token认证&#10;   前端：HTML、Css、JavaScript、Vue视图层绑定、Vue组件化开发 （此应用是非脚手架多页面应用）；&#10;   数据库：基于角色的权限控制RBAC(Role-Based Access Control)设计思路，扩展思路；&#10;-------------------------------------------------------------------------------&#10;&#10;1、环境说明：&#10;   Java8 以上版本、 SpringBoot2.2以上版本&#10;   Mysql8&#10;&#10;2、项目结构&#10;&#10;  1) doc：相关数据库文档和重要的SQL语句；&#10;  2) api-service：后端项目；&#10;  3）sys：前端HTML项目（可以放在任意位置运行，非脚手架）；&#10;  4）resource：是资料上传后的文件夹。可以放在服务器任意位置。&#10;              如果在本地运行，可以放在任意，但需要设置，文件上传路径（下面讲）；&#10;&#10;3、数据库数据导入和配置&#10;  1）在doc下找到”dms**.sql“，用数据库客户端工具导入mysql8；&#10;  2）打开api-service项目，找到资源配置文件application.properties，修改成自己的连接；&#10;  3）数据库中有数据之后，如何和资料文件连接呢，把resource放在任意位置，但路径保持英文，到&#10;    application.properties中修改file.path，指向自己的路径即可。&#10;&#10;4、前端配置&#10;  打开sys/static/js/App.js，修改第一个参数global_api_url，后端默认是8080，如果没改可以直接运行；&#10;&#10;5、体验，进入系统&#10;  高级 账号：admin、密码：000000&#10;  请不要删除此账号，以及对应的角色，否则系统基础数据重新建立。&#10;6、其他测试账号：&#10;  其他测试账号初始化密码都是：000000&#10;  1）用高级管理员进入系统，找到”系统管理-用户“，可以看到所有用户，以及他的角色&#10;   （现在系统用户、角色、授权已经全部配置好了，请勿改动）；&#10;  2) 院系角色看到本院系的所有资料、能新增、修改本院系所管理的资料分类以及资料；      能添加本院系的用户；&#10;  3）教师、教务处、学办角色类似，只能看个人管理的资料和公共资料；&#10;  4）学生只能看公共的资料；" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="63" key="#Project_Structure" timestamp="1588907192796">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="63" key="#Project_Structure/0.0.1440.900@0.0.1440.900" timestamp="1588907192796" />
+    <state x="217" y="100" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587543242443">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="217" y="100" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1587543242443" />
+    <state x="896" y="282" key="#com.intellij.ide.util.MemberChooser" timestamp="1588406958754">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="896" y="282" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1588406958754" />
+    <state x="458" y="233" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1587615885386">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="233" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1440.900@0.0.1440.900" timestamp="1587615885386" />
+    <state x="341" y="258" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1587476150191">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="341" y="258" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1440.900@0.0.1440.900" timestamp="1587476150191" />
+    <state x="570" y="357" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587470442664">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="570" y="357" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1440.900@0.0.1440.900" timestamp="1587470442664" />
+    <state x="511" y="363" key="#com.intellij.javaee.module.view.web.EditWebRootDialog" timestamp="1587543100248">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="511" y="363" key="#com.intellij.javaee.module.view.web.EditWebRootDialog/0.0.1440.900@0.0.1440.900" timestamp="1587543100248" />
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587795529603">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1587795529603" />
+    <state x="245" y="60" width="827" height="642" key="CommitChangelistDialog2" timestamp="1591148611867">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="245" y="60" width="827" height="642" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1591148611867" />
+    <state x="452" y="100" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1587117746646" />
+    <state x="80" y="28" width="1267" height="742" key="DiffContextDialog" timestamp="1587397141537">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="80" y="28" width="1267" height="742" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1587397141537" />
+    <state x="620" y="196" key="FileChooserDialogImpl" timestamp="1587116896064">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="620" y="196" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1587116896064" />
+    <state width="1396" height="201" key="GridCell.Tab.0.bottom" timestamp="1590676537980">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1590676537980" />
+    <state width="818" height="187" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="416" key="GridCell.Tab.0.bottom/0.23.1440.829@0.23.1440.829" timestamp="1587218911511" />
+    <state width="1396" height="201" key="GridCell.Tab.0.center" timestamp="1590676537976">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1590676537976" />
+    <state width="818" height="187" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="416" key="GridCell.Tab.0.center/0.23.1440.829@0.23.1440.829" timestamp="1587218911511" />
+    <state width="1396" height="201" key="GridCell.Tab.0.left" timestamp="1590676537975">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1590676537975" />
+    <state width="818" height="187" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="416" key="GridCell.Tab.0.left/0.23.1440.829@0.23.1440.829" timestamp="1587218911510" />
+    <state width="1396" height="201" key="GridCell.Tab.0.right" timestamp="1590676537978">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1590676537978" />
+    <state width="818" height="187" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="416" key="GridCell.Tab.0.right/0.23.1440.829@0.23.1440.829" timestamp="1587218911511" />
+    <state width="1396" height="201" key="GridCell.Tab.1.bottom" timestamp="1590676537985">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1590676537985" />
+    <state width="818" height="187" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="168" key="GridCell.Tab.1.bottom/0.23.1440.829@0.23.1440.829" timestamp="1587217942738" />
+    <state width="1396" height="201" key="GridCell.Tab.1.center" timestamp="1590676537982">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1590676537982" />
+    <state width="818" height="187" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="168" key="GridCell.Tab.1.center/0.23.1440.829@0.23.1440.829" timestamp="1587217942737" />
+    <state width="1396" height="201" key="GridCell.Tab.1.left" timestamp="1590676537981">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1590676537981" />
+    <state width="818" height="187" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="168" key="GridCell.Tab.1.left/0.23.1440.829@0.23.1440.829" timestamp="1587217942736" />
+    <state width="1396" height="201" key="GridCell.Tab.1.right" timestamp="1590676537983">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="201" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1590676537983" />
+    <state width="818" height="187" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1587118196961" />
+    <state width="1398" height="168" key="GridCell.Tab.1.right/0.23.1440.829@0.23.1440.829" timestamp="1587217942737" />
+    <state x="480" y="207" key="NewModule_or_Project.wizard" timestamp="1587116746201">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="480" y="207" key="NewModule_or_Project.wizard/0.0.1680.1010@0.0.1680.1010" timestamp="1587116746201" />
+    <state x="125" y="86" width="1309" height="815" key="SettingsEditor" timestamp="1588754953103">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="125" y="68" width="1309" height="815" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1588738129526" />
+    <state x="320" y="81" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1587116923718" />
+    <state x="125" y="86" key="SettingsEditor/0.23.1440.828@0.23.1440.828" timestamp="1588754953103" />
+    <state x="188" y="36" width="935" height="725" key="Vcs.Push.Dialog.v2" timestamp="1591148637794">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="188" y="36" width="935" height="725" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1591148637794" />
+    <state x="432" y="240" width="1036" height="530" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1587119310486" />
+    <state x="456" y="248" key="git4idea.merge.GitMergeDialog" timestamp="1587121981681">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="456" y="248" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1587121981681" />
+    <state x="467" y="302" key="git4idea.ui.GitTagDialog" timestamp="1587121994625">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="467" y="302" key="git4idea.ui.GitTagDialog/0.0.1440.900@0.0.1440.900" timestamp="1587121994625" />
+    <state x="124" y="72" key="new project wizard" timestamp="1588406554237">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="124" y="72" key="new project wizard/0.0.1440.900@0.0.1440.900" timestamp="1588406554237" />
+    <state x="385" y="210" key="run.anything.popup" timestamp="1587478321556">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="210" key="run.anything.popup/0.0.1440.900@0.0.1440.900" timestamp="1587478321556" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/dms$AppApplication.ic" NAME="AppApplication Coverage Results" MODIFIED="1587478245116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

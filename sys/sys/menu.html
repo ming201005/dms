@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端菜单管理</title>
+
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/eui/element-ui.css">
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+    <script src="../static/js/icon-comm.js"></script>
+
+
+    <link rel="stylesheet" href="../static/css/template.css">
+    <style>
+        .icon{
+
+        }
+       .icon ul {
+            display: block;
+            list-style-type: disc;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 40px;
+        }
+        .icon li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+        .icon .icon-list li {
+            float: left;
+            width: 16.66%;
+            text-align: center;
+            height: 120px;
+            line-height: 120px;
+            color: #666;
+            font-size: 13px;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin-right: -1px;
+            margin-bottom: -1px;
+        }
+        .icon ul:not(.timeline) {
+            margin: 10px 0;
+            padding: 0 0 0 20px;
+            font-size: 14px;
+            color: #5e6d82;
+            line-height: 2em;
+        }
+        .icon ul.icon-list {
+            overflow: hidden;
+            list-style: none;
+            padding: 0!important;
+            border: 1px solid #eaeefb;
+            border-radius: 4px;
+        }
+        .icon .icon-list li span {
+            line-height: normal;
+            font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+            color: #99a9bf;
+            transition: color .15s linear;
+        }
+        .icon .icon-list li i {
+            display: block;
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #606266;
+            transition: color .15s linear;
+        }
+        .icon .icon-list li:after, .icon-list li span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon .icon-list li:hover, .icon-list li:hover span {
+            display: inline-block;
+            vertical-align: middle;
+            color: #409eff;
+        }
+        .icon .icon-list li:hover i{
+            display: block;
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #409eff;
+            transition: color .15s linear;
+        }
+
+        .icon .icon-list li:after {
+            content: "";
+            height: 100%;
+        }
+
+        [class*=" icon-"], [class^=icon-] {
+            font-family: icomoon!important;
+            speak: none;
+            font-style: normal;
+            font-weight: 400;
+            /* font-variant: normal; */
+            /* text-transform: none; */
+            /* line-height: 1; */
+            /* -webkit-font-smoothing: antialiased; */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <refresh-comm></refresh-comm>
+    <!--引用form-box-comm组件-->
+    <form-box-comm ref="myForm"
+                   :box-title="boxTitle"
+                   :add-api-url="url"
+                   :edit-api-url="url"
+                   :model="model"
+                   :id-key="model.frontendMenuId"
+                   :on-validate="formValidateHandler"
+                   :on-success="successHandler">
+
+        <!--添加自己的元素-->
+        <template>
+            <div class="item">
+                <label for="parentName">父级菜单：</label>
+                <input style="width: 300px;"  id="parentName" v-model="model.parentName" disabled>
+            </div>
+
+            <div class="item">
+                <label for="frontendMenuName">菜单名称：</label>
+                <input style="width: 300px;"  id="frontendMenuName" v-model="model.frontendMenuName">
+
+            </div>
+
+            <div class="item">
+                <label for="icon">图标样式：</label>
+                <input id="icon" v-model="model.icon">
+                <span style="margin-left: 10px;">
+                    <button @click="openIcon">设置图标</button>
+                </span>
+            </div>
+
+            <div class="item">
+                <label for="frontendMenuUrl">页面链接：</label>
+                <input style="width: 300px;"  id="frontendMenuUrl" v-model="model.frontendMenuUrl">
+            </div>
+
+            <div class="item">
+                <label for="frontendMenuSort">排序：</label>
+                <input type="number" id="frontendMenuSort" v-model="model.frontendMenuSort">
+                <span style="margin-left: 10px;">务必填写，建议：分类一：100、101、102；分类二：200、201；以此类推</span>
+            </div>
+            <div class="item">
+                <label for="description">说明：</label>
+                <textarea style="width: 500px; height: 100px;"  id="description" v-model="model.description"></textarea>
+            </div>
+        </template>
+        <!--添加自己的元素 结束-->
+    </form-box-comm>
+
+    <!--引用data-list-comm组件-->
+    <data-list-comm ref="menuList"
+                    :list-api-url="url"
+                    :delete-api-url="url"
+                    row-id-key="frontendMenuId"
+                    :on-add-new-form="onAddNewFormHandler"
+                    @on-delete-success="getList"
+                    ref-parent="true">
+
+        <!--自定义表头,覆盖默认模板-->
+        <template>
+            <tr slot="dataHead" class="h">
+                <td>父级</td>
+                <td>菜单名称</td>
+                <td>页面链接</td>
+                <td>排序</td>
+                <td>说明</td>
+                <td>操作</td>
+            </tr>
+        </template>
+        <!--自定义内容器,覆盖默认模板-->
+        <template>
+            <tr v-if="modelList !=null && modelList.length>0"
+                v-for="item in modelList"
+                :style="item.pid==null? {backgroundColor:backgroundColor}:{}">
+
+                <td>{{item.parentName}}</td>
+                <td>{{item.pid==null? "":"--"}}<i :class="item.icon"></i>{{item.frontendMenuName}}</td>
+                <td>{{item.frontendMenuUrl}}</td>
+                <td>{{item.frontendMenuSort}}</td>
+                <td>{{item.description}}</td>
+                <td>
+                    <button @click="openIcon">设置图标</button>
+                    <button @click="onEditFormHandler(item)">编辑</button>
+                    <button @click="del(item)">删除</button>
+                    <button @click="addChild(item)" v-if="item.pid==null">添加子菜单</button>
+                </td>
+            </tr>
+        </template>
+    </data-list-comm>
+
+    <!--图标窗体-->
+    <icon-comm ref="myIcon"></icon-comm>
+</div>
+<script>
+
+    let vue = new Vue({
+        el: "#app",
+        data: {
+
+            boxTitle: '新增菜单',
+            url: global_api_url + "sysFrontendMenuTable",
+
+            //父级背景颜色
+            backgroundColor: '#ECECEC',
+
+            //表单的对象
+            // 表单的对象不一定和列表表单字段一样，所以单独定义
+            //对象
+            model: {
+                frontendMenuId: null,
+                frontendMenuName: null,
+                frontendMenuUrl: null,
+                parentName: null,
+                pid: null,
+                frontendMenuSort: null,
+                description: null,
+                icon:null
+            },
+            modelList: []
+        },
+
+        // //虚拟DOM挂在后再调用
+        mounted() {
+            this.getList()
+        },
+
+        methods: {
+
+            /**
+             * 必须设置async，且是mounted方法内执行，否则无法取到有异步请求远程数据
+             */
+            async getList() {
+                //此方法内有异步，必须设置等待
+                await this.$refs.menuList.getModelList();
+                this.modelList = this.$refs.menuList.modelList;
+            },
+
+            //打开小图标设置窗体
+            openIcon(){
+                this.$refs.myIcon.openWin();
+            },
+
+            //关闭小图标设置窗体
+            closeIcon(){
+                this.$refs.myIcon.closeWin();
+            },
+
+            /**
+             * 挂载表单保存数据前，验证方法
+             * 这个方法必须有true/false返回值
+             */
+            formValidateHandler(model) {
+                //console.log(model);
+                if (model.frontendMenuName != null && model.frontendMenuName != "") {
+                    return true;
+                } else {
+                    alert("请输入菜单名称！");
+                    return false;
+                }
+            },
+
+            /**
+             * 数据保存成功后执行
+             */
+            successHandler(data) {
+                //console.log(data);
+                this.getList();
+                this.$refs.myForm.closeForm();
+            },
+
+            /**
+             * 挂载新建表单方法
+             */
+            onAddNewFormHandler() {
+                //打开窗口
+                this.$refs.myForm.showForm();
+
+                this.boxTitle = '新增菜单';
+
+                //恢复原样
+                this.model = {};
+            },
+
+            /**
+             * 挂载获得编辑表单方法
+             */
+            onEditFormHandler(item) {
+                //打开窗口
+                this.$refs.myForm.showForm();
+                this.boxTitle = `正在修改[${item.frontendMenuName}]`;
+
+                //赋值
+                this.model = item;
+            },
+
+            /**
+             * 想显示父节点名称的话，后端查询要自身表关联。
+             */
+            addChild(item) {
+                //恢复原样
+                this.model = {};
+                //打开窗口
+                this.$refs.myForm.showForm();
+
+                //把当前的ID赋给子节点的pid
+                this.model.pid = item.frontendMenuId;
+                //把当前的菜单名赋给子节点父级名
+                this.model.parentName = item.frontendMenuName;
+
+            },
+
+            /**
+             * 删除数据
+             * @param frontendMenuId
+             */
+            del(item) {
+                //直接调用子组件方法
+                this.$refs.menuList.del(item);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

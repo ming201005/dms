@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加资料</title>
+
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/eui/element-ui.css">
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+    <script src="../static/js/ckeditor.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+
+    <link rel="stylesheet" href="../static/css/template.css">
+    <style>
+        .ck-editor__editable {
+            width: 800px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <refresh-comm></refresh-comm>
+
+    <!--引用form-box-comm组件-->
+    <form-box-comm ref="myForm" :form-type="1" :box-title="boxTitle">
+
+        <!--添加自己的元素-->
+        <template>
+            <div class="item">
+                <label for="typeId">资料分类：</label>
+                <select style="width: 300px;" id="typeId" style="width: 173px;"
+                        v-model="model.typeId">
+                    <option selected="selected" value="0">请选择</option>
+                    <option :value="item.id" v-for="item in resourceTypeList">{{item.resourceTypeName}}
+                    </option>
+                </select>
+                <!-- <button style="margin-left: 10px;" @click="addType">新建分类</button> -->
+            </div>
+            
+            <div class="item">
+                <label for="resourceName">选择资料：</label>
+                <div>
+                    <el-upload
+                        ref="upload"
+                        accept=".doc,.pdf,.xls,.docx,.xlsx"
+                        :headers="token"
+                        :action="uploadUrl"
+                        :before-upload="beforeUpload"
+                        :on-change="onChange"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :on-success="onSuccess"
+                        :data="model"
+                        :file-list="fileList"
+                        :auto-upload="false">
+                        <el-button slot="trigger" v-if="hashDoc" size="small" type="primary">选择...</el-button>
+                    </el-upload>
+                </div>
+                <div slot="tip" class="el-upload__tip" style="font-size: 14px; margin-left: 10px;">只能上传Word、PDF、Excel文件，且不超过30MB</div>
+            </div>
+
+            <div class="item">
+                <label for="resourceName">资料名称：</label>
+                <input style="width: 295px;" id="resourceName" v-model="model.resourceName">
+            </div>
+
+            <div class="item">
+                <label for="upUser">上传人：</label>
+                <input style="width: 150px;" disabled id="upUser" v-model="model.upUser">
+                <label for="typeId" style="width: 65px;" >状态：</label>
+                <select style="width: 80px;" id="typeId" style="width: 173px;"
+                        v-model="model.resourceState">
+                    <option selected="selected" value="0">私有</option>
+                    <option value="1">公共</option> 
+                    </option>
+                </select> 
+            </div>
+            
+            
+            <div class="item">
+                <label for="des">资料说明：</label>
+                <div id="des"></div>
+            </div>
+
+            <template slot="btn">
+                <el-button style="padding: 10px;" size="small" type="success" @click="submitUpload">上传资料和保存数据</el-button>
+            </template>
+            
+        </template>
+        <!--添加自己的元素 结束-->
+    </form-box-comm>
+</div>
+<script>
+ 
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            boxTitle: '添加资料',
+            url: global_api_url + "resource",
+
+            //附件上传地址
+            uploadUrl:global_api_url+"resource/uploadFile",
+            //设置token，因为el-upload设置token方式不一样。
+            token: {[Auth.USER_AUTH_KEY]: token},
+            //文件列表（上传之后）
+            fileList: [],
+            //显示上传按钮控制
+            hashDoc:true,
+             
+            // 表单的对象
+            // 表单的对象不一定和列表表单字段一样，所以单独定义
+            model: {
+                id:null,
+                //文件类型ID-外键
+                typeId:0,
+                //文件名称
+                resourceName:"",
+                //物理视频上存储的文件名称
+                pathResourceName:"",
+                //上传时间
+                //createTime:null,
+                //文件大小（单位MB：9.35MB)
+                //resourceSize:0,
+                //文件后缀：doc、pdf、等
+                //fileSuffix:null,
+                //文件状态，0：私有；1：公共
+                resourceState:0,
+                //文件上传人
+                upUser:Auth.getUserName(),
+                //描述
+                des:"",
+                //组织ID
+                organizationId:null,
+                //组织名称
+                organizationName:null,
+                //资料分类
+                resourceTypeName:null
+            },
+
+            
+            
+            ckEditor : null,
+
+            //资料分类
+            resourceTypeList:null
+     
+        },
+        //初始化
+        created() {
+        
+            this.model.id = App.getParameter("id");
+            //如果是编辑，查询数据
+            if(this.model.id != null && this.model.id !=""){  
+                let urlApi = this.url+"/"+this.model.id;
+                //读取数据
+                App.getFormDataById(urlApi, rs => {
+                    this.model = rs ;
+                    //设置富文本内容
+                    this.setCkEditor();
+                    //设置修改标题
+                    this.boxTitle = "修改资料-"+this.model.resourceName;
+                    //设置文件
+                    this.fileList.push({name:this.model.resourceName,url:this.model.pathResourceName});
+                    //控制选择上传文件的按钮
+                    this.hashDoc = false;
+                    //加载资料分类
+                    App.getBaseListApi(global_api_url+"resourceType?organizationId="+this.model.organizationId,rs=>this.resourceTypeList = rs);
+                });
+            }else{
+                this.model.organizationId = App.getParameter("organizationId");
+                this.model.organizationName = App.getParameter("organizationName");
+                App.getBaseListApi(global_api_url+"resourceType?organizationId="+this.model.organizationId,rs=>this.resourceTypeList = rs);
+            }  
+        },
+
+        //让DOM挂载完毕后，再设置富文本
+        mounted() {
+            if(this.model.id == null || this.model.id == ""){
+                this.setCkEditor();
+            }
+        },
+
+        //方法定义
+        methods: {
+            //提交
+            submitUpload() {
+                this.$refs.upload.submit();
+            },
+            //删除时
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                this.hashDoc = true;
+                
+                //执行删除
+            },
+
+            //上传前处理
+            beforeUpload(file){ 
+                //富文本内容
+                this.model.des = this.ckEditor.getData();
+                //删除创建日期属性,后台自动更新
+                delete this.model.createTime;
+                //检查
+                if(this.model.typeId != null && this.model.typeId !=0) {
+                    if (this.model.resourceName != null && this.model.resourceName != "") {
+                        return true;
+                    } else {
+                        this.$message.error("错误：请输入资料名称，或上传文件自动填充！");
+                        return false;
+                    }
+                }else{
+                    this.$message.error("错误：请选择分类！");
+                    return false;
+                }
+            },
+            //
+            handlePreview(file) {
+                console.log("预览：",file);
+            },
+
+            //文件改变是
+            onChange(file, fileList){
+                console.log("onChange==>",file,"fileList==>",fileList);
+                //得到文件名称
+                this.model.resourceName = file.name;
+                if(this.model.id >0){
+
+                }else{
+                   this.model.id = -1;
+                }
+                this.hashDoc = false;
+            },
+            
+            //上传成功时
+            onSuccess(response, file, fileList){
+                console.log(response, file, fileList);
+                if(response.code == 0){
+                    this.fileList = fileList;
+                    this.hashDoc = false;
+                    this.$message.success(response.msg);
+                }else{
+                    this.hashDoc = true;
+                    this.model.resourceName = "";
+                    this.$message.error(response.msg);
+                }
+            },
+
+            /**
+             * 富文本对象创建和设置相关值
+             */
+            setCkEditor() {
+                if(this.model.id != null && this.model.id != ""){
+                    let text = this.model.des? this.model.des : "";
+                    App.initEditor("des", text, this.ckEditor,rs=>this.ckEditor = rs);
+                }else{
+                    App.initEditor("des", "", this.ckEditor, rs=>this.ckEditor = rs);
+                }
+            },
+
+            // //打开新建文件类型
+            // addType(){
+            //     let url = "./resource/resourceType.html?id="
+            //             +this.model.organization.id
+            //             +"&name="+this.model.organization.name;
+            //     //        
+            //     parent.app.addTab("资料分类", url);
+            // }
+        }
+    });
+
+</script>
+</body>
+</html>

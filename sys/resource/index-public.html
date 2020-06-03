@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>资料管理-公共资料</title>
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+    <script src="../static/js/PageComm.js"></script>
+    <script src="../static/js/organization-comm.js"></script>
+
+    <link href="../static/eui/element-ui.css" rel="stylesheet">
+    <link href="../static/css/template.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/css/page.css" rel="stylesheet">
+
+    <style>
+        
+    .select {
+        margin: 5px 10px  5px 0;
+        padding: 5px 10px;
+        background: #e6e6e6;
+        color: #000;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+    }
+    .ac {
+        background: #0E90D2;
+        color: #FFF;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <refresh-comm></refresh-comm>
+        <!--搜索-->
+        <div class="model_form" style="border: 1px; 
+                background-color: whitesmoke;
+                padding: 10px 3px;
+                ">
+            <div class="item">
+                <label for="typeId">选择院系：</label>
+                <div @click="selectOrganization(item)" 
+                    :class="item.id==model.organizationId? 'select ac':'select'"
+                    v-for="item in organizationList">{{item.name}}
+                </div>
+            </div>
+
+            <div class="item" v-if="resourceTypeList.length>0">
+                <label for="typeId">资料分类：</label>
+                <div @click="rselectResourceType(item)" 
+                    :class="item.id==model.typeId? 'select ac':'select'"
+                    v-for="item in resourceTypeList">{{item.resourceTypeName}}
+                </div>
+            </div>
+
+            <div class="item">
+                <label for="resourceName">关键字：</label>
+                <el-input clearable v-model="model.resourceName"  style="width: 200px;"></el-input>
+                <label style="width:auto; margin: 0 5px;">时间范围:</label>
+                <el-date-picker v-model="model.datetime1" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker>   
+                <!-- <input type="datetime-local" style="width: 150px;"   v-model="model.datetime1"> -->
+                <label style="width:auto; margin: 0 5px;">至</label>
+                <el-date-picker v-model="model.datetime2" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker> 
+                <!-- <div style="width: 350px;text-align: right;"><button class="select ac" @click="search">搜索</button></div> -->
+            </div>
+           
+        </div>
+
+        <!--引用data-list-comm组件-->
+        <data-list-comm ref="myList" opentions="false" :list-api-url="url" is-page="true" :on-page="onPage"
+            ref-parent="true">
+
+            <!--自定义表头,覆盖默认模板-->
+            <template slot="dataHead">
+                <tr class="h">
+                    <td style="text-align: center;width: 18%">院系</td>
+                    <td style="text-align: center;width: 12%">资料分类</td>
+                    <td style="text-align: center; width: 5%">类型</td>
+                    <td style="text-align: center; width: 35%">资料名称</td>
+                    <td style="text-align: center;width: 8%">上传人</td>
+                    <td style="text-align: center;width: 12%">上传时间</td>
+                    <td style="text-align: center;width: 50px;">操作</td>
+                </tr>
+            </template>
+
+            <template>
+                <tr v-if="modelList !=null && modelList.length>0" v-for="(item,index) in modelList">
+                    <td>{{item.organizationName}} </td>
+                    <td>{{item.resourceTypeName}}</td>
+                    <td style="text-align: center;">{{item.fileSuffix}}</td>
+                    <td>
+                        <span><button
+                                :class="item.resourceState==1? 'button action': 'button'">{{item.resourceState==1?'公开':'私人'}}</button></span>
+                        <span>{{item.resourceName}}</span>
+                    </td>
+                    <td style="text-align: center;">{{item.upUser}}</td>
+                    <td style="text-align: center;">{{item.createTime |formatDate}}</td>
+                    <td style="text-align: center;">
+                        <!-- <button @click="onlineView(item)">浏览</button> -->
+                        <button @click="downLoad(item)">下载</button>
+                    </td>
+                </tr>
+            </template>
+        </data-list-comm>
+
+        <!--分页组件-->
+        <div style="float:right;margin-top: 10px;">
+            <page-comm :current="page.current" :allpage="page.pages" :size="page.size" :total="page.total"
+                :index-page-data="indexPageData"></page-comm>
+        </div>
+    </div>
+    <script>
+
+        let vue = new Vue({
+            el: "#app",
+            data: {
+                url: global_api_url + "resource/public",
+                //搜索
+                model: {
+                    id: null,
+                    //文件类型ID-外键
+                    typeId: 0,
+                    //文件名称
+                    resourceName: "",
+                    //物理视频上存储的文件名称
+                    pathResourceName: "",
+                    //上传时间
+                    //createTime:null,
+                    //文件大小（单位MB：9.35MB)
+                    //resourceSize:0,
+                    //文件后缀：doc、pdf、等
+                    //fileSuffix:null,
+                    //文件状态，0：私有；1：公共
+                    resourceState: 0,
+                    //文件上传人
+                    upUser: Auth.getUserName(),
+                    //描述
+                    des: "",
+                    //组织ID
+                    organizationId: 0,
+                    //组织名称
+                    organizationName: null,
+                    //资料分类
+                    resourceTypeName: null,
+                    datetime1:null,
+                    datetime2:null
+                },
+                //数据列表
+                modelList: [],
+                //组织
+                resourceTypeList: [],
+                organizationList: [],
+                //分页对象
+                page: {
+                    current: 1,
+                    size: 10,
+                    pages: 0,
+                    total: 0
+                }
+            },
+            created() {
+                App.getBaseListApi(global_api_url + "organization", data => {
+                    this.organizationList = data;
+                });
+            },
+            mounted() {
+                this.indexPageData(1);
+            },
+
+            watch: {
+                /**
+                 * 监听模型对象，有变化就搜索
+                 */
+                model: {
+                    handler(newModel, oldModel) {
+                        console.log("搜索开始====>>>", newModel);
+                        //执行搜索
+                        this.indexPageData(1);
+                    },
+                    deep: true // 深度监控
+                }
+            },
+
+            //过滤器
+            filters: {
+
+                /**
+                 * 时间格式化
+                 */
+                formatDate: function (time) {
+                    if (time != null && time != "") {
+                        var date = new Date(time);
+                        return App.formatDate(date, "yyyy-MM-dd");
+                    } else {
+                        return "";
+                    }
+                }
+            },
+
+            methods: {
+
+               
+                /**
+                 * 加载右边数据
+                 */ 
+                selectOrganization(item){
+                    this.model.organizationId = item.id;
+                    this.model.organizationName = item.name;
+                    //加载资料分类
+                    App.getBaseListApi(global_api_url + "resourceType?organizationId=" + this.model.organizationId, rs => this.resourceTypeList = rs);
+                },
+
+                rselectResourceType(item){
+                    this.model.typeId = item.id;
+                    this.model.resourceTypeName = item.resourceTypeName;
+                },
+
+                 /**
+                 * 如果独立运行，请放在mounted方法内执行。
+                 * 此处是组织组件的钩子
+                 */
+                 async getList(url) {
+                    console.log("2-----getList,here.....................")
+                    //此方法内有异步，必须设置等待
+                    await this.$refs.myList.getModelList(url,this.model);
+                    this.modelList = this.$refs.myList.modelList;
+                    console.log("4------modelList modelList======", this.modelList);
+
+                },
+
+
+                search(){
+                    this.indexPageData(1) ;
+                },
+
+                /**
+                 * 分页，是data-list-comm组件钩子
+                 */
+                onPage(page) {
+                    this.page = page;
+                    console.log("3--------course page======", this.page);
+                },
+
+                //读取当前页数据，分页组件钩子
+                indexPageData(index) {
+                    this.page.current = index;
+                    let url = this.url + '?size=' + this.page.size + '&current=' + this.page.current
+                    //匹配搜索
+                    if(this.model.organizationId>0){
+                        url +="&organizationId="+this.model.organizationId;
+                    }
+                    if(this.model.typeId>0){
+                        url +="&typeId="+this.model.typeId;
+                    }
+                    if(this.model.resourceName !=null && this.model.resourceName !=""){
+                        url +="&resourceName="+this.model.resourceName;
+                    }
+                    if(this.model.datetime1 !=null && this.model.datetime2 != ""){
+                        url +="&datetime1="+this.model.datetime1+"&datetime2="+this.model.datetime2;
+                    }
+                    this.getList(url);
+                },
+
+
+                /**
+                 * 资料下载
+                 */
+                downLoad(item) {
+                    let url = global_api_url + "resource/downLoad";
+                    let data = {
+                        params: { filename: item.pathResourceName },
+                        //一定要写
+                        responseType: `arraybuffer`
+
+                    }
+                    axios.get(url, data).then(res => {
+                        if (res.status == 200) {
+                            //文件类型
+                            let docType = "";
+                            switch (item.fileSuffix) {
+                                case '.doc' || '.docx':
+                                    docType = 'application/msword;charset=utf-8';
+                                    break;
+                                case '.xls' || '.xlsx':
+                                    docType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8';
+                                    break;
+                                case '.pdf':
+                                    docType = 'application/pdf;charset=utf-8';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            let blob = new Blob([res.data], { type: docType });
+
+                            let objectUrl = URL.createObjectURL(blob);
+                            let link = document.createElement("a");
+                            //下载资料后的名字
+                            let fname = item.resourceName;
+                            link.href = objectUrl;
+                            link.setAttribute("download", fname);
+                            document.body.appendChild(link);
+                            link.click();
+                            this.$message.success("下载成功");
+                        } else {
+                            this.$message.error("下载失败");
+                        }
+                    }).catch(err => {
+                        this.$message.error("下载失败：" + err);
+                    });
+                },
+
+                /**
+                 * 在线浏览
+                 */
+                onlineView(item) {
+                    //目前支持pdf预览
+                    //TEST
+                    //window.open("http://localhost:88/v/web/viewer.html?file=http://localhost:89/13/fc0e0d5979004237bebe73dbaa3a772f.pdf")
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
