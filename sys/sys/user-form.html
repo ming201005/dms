@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/eui/element-ui.css">
+
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/eui/index.js"></script>
+    <script src="../static/js/ckeditor.js"></script>
+
+    <script src="../static/js/App.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/checkIsLogin.js"></script>
+    <script src="../static/js/FormBoxComponent.js"></script>
+    <script src="../static/js/DataListComponent.js"></script>
+    <script src="../static/js/RefreshComponent.js"></script>
+
+    <link rel="stylesheet" href="../static/css/template.css">
+    <style>
+        .ck-editor__editable {
+            width: 800px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" style="display: flex;">
+    <refresh-comm></refresh-comm>
+
+        <!--引用form-box-comm组件-->
+        <form-box-comm ref="myForm"
+                       :form-type="1"
+                       :box-title="boxTitle"
+                       :add-api-url="url+'/register'"
+                       :edit-api-url="url"
+                       :model="model"
+                       :id-key="model.id"
+                       :on-validate="formValidateHandler"
+                       :before-save="beforeSave"
+                       :on-success="successHandler">
+
+            <!--添加自己的元素-->
+            <template>
+                <div class="item">
+                    <label for="name">院系：</label>
+                    <span style="margin-left: 10px;">{{model.organization.name}}</span>
+                </div>
+                <div class="item">
+                    <label for="name">登录账号：</label>
+                    <input style="width: 300px;" id="name" v-model="model.name">
+                    <span style="margin-left: 10px;"> 登录账号不能重复，可选学生证或者身份证</span>
+                </div>
+
+                <div class="item">
+                    <label for="passw">登录密码：</label>
+                    <input style="width: 300px;" type="password" id="passw"  v-model="model.passw">
+                    <span style="margin-left: 10px;"> 
+                        <input type="checkbox" v-model="checkDefault">
+                        初始密码：{{defaultPassWord}}(密码范围是6~20位数)
+                    </span>
+                </div>
+
+                <div class="item">
+                    <label>用户类型：</label>
+                    <input id="userType1" type="radio" value="1" v-model="model.userType"><label style="width: auto" for="userType1">学生</label>
+                    <input id="userType2" type="radio" value="2" v-model="model.userType"><label style="width: auto"  for="userType2">非学生</label>
+                </div>
+
+                <div class="item">
+                    <label for="userShow">姓名：</label>
+                    <input style="width: 300px;" id="userShow" v-model="model.userShow">
+                </div>
+
+                <div class="item">
+                    <label>性别：</label>
+                    <input id="userSex1" type="radio" value="男" v-model="model.userSex"><label style="width: auto"  for="userType1">男</label>
+                    <input id="userSex2" type="radio" value="女" v-model="model.userSex"><label style="width: auto"  for="userType2">女</label>
+                    
+                </div>
+
+                <div class="item">
+                    <label>设置角色：</label>
+                    <div style="display: flex; width: 100%; flex-wrap: wrap;">
+                            <span style="padding: 3px 5px; width: auto;" v-for="item in roleList">
+                              <input type="checkbox"
+                                     :id="item.roleId"
+                                     :value="item"
+                                     v-model="model.roleList">
+                                <label style="margin: 0;width: auto;"
+                                       :for="item.roleId">{{item.roleName|roleShow}}</label>
+                            </span>
+                            <span style="margin-left: 5px; padding: 5px; background-color: #ffc107">也可以在：<a href="javascript:;" @click="roleSet">角色-用户分配 设置</a></span>
+                    </div>
+
+                </div>
+
+                <div class="item">
+                    <label for="des">描述：</label>
+                    <div id="des"></div>
+                </div>
+            </template>
+            <!--添加自己的元素 结束-->
+        </form-box-comm>
+</div>
+<script>
+
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            boxTitle: '新增用户',
+            url: global_api_url + "user",
+            //用户测试密码
+            defaultPassWord: "000000",
+            //默认设置密码是初始密码
+            checkDefault:true,
+            // 表单的对象
+            // 表单的对象不一定和列表表单字段一样，所以单独定义
+            model: {
+                id: null,
+                name: null,//登录账号
+                userShow:null,  //显示名称
+                passw:null,
+                userSex:'男',//性别
+                userType:1,//用户类型，1：学生；2：非学生
+                organization:{}, //院系
+                des:"",
+                //角色
+                roleList:[]
+            },
+            
+            ckEditor : null,
+
+            //--------------------------------------------------
+            //角色
+            roleList:[]
+        },
+        //初始化
+        created() {
+            //默认设置初始密码
+            this.model.passw = this.defaultPassWord;
+            //取参数
+            this.model.id = App.getParameter("id");
+            if(this.model.id != null && this.model.id !=""){
+                //读取数据
+                App.getFormDataById(this.url+"/"+this.model.id, rs => {
+                    this.model = rs ;
+                    this.setCkEditor();
+                    //设置数据
+                    this.boxTitle = "修改用户-"+this.model.name;
+                });
+            }else{
+                this.model.organization.id = App.getParameter("organizationId");
+                this.model.organization.name = App.getParameter("organizationName");
+            }
+            
+            //加载权限列表
+            App.getBaseListApi(global_api_url+"sysRoleTable",data=> this.roleList = data,false);
+
+        },
+
+        //让DOM挂载完毕后，再设置富文本
+        mounted() {
+            if(this.model.id == null || this.model.id == ""){
+                this.setCkEditor();
+            }
+        },
+
+        //过滤器
+        filters: {
+            /**
+             *角色显示
+             */
+            roleShow: function (val) {
+                if (val != null && val != "") {
+                    return val.replace("ROLE_","");
+                } else {
+                    return "";
+                }
+            }
+        },
+        watch:{
+            //监听是否选中默认密码
+            checkDefault(){
+                if(this.checkDefault) {
+                    this.model.passw = this.defaultPassWord;
+                }
+            }
+        },
+
+        methods: {
+            /**
+             * 富文本对象创建和设置相关值
+             */
+            setCkEditor() {
+                if(this.model.id != null && this.model.id != ""){
+                    let text = this.model.des? this.model.des : "";
+                    App.initEditor("des", text, this.ckEditor,rs=>this.ckEditor = rs);
+                }else{
+                    App.initEditor("des", "", this.ckEditor, rs=>this.ckEditor = rs);
+                }
+            },
+
+            //保存前
+            beforeSave(model) {
+                model.des = this.ckEditor.getData();
+                return model;
+            },
+
+            /**
+             * 挂载表单保存数据前，验证方法
+             * 这个方法必须有true/false返回值
+             */
+            formValidateHandler(model) {
+                if(this.model.organization.id != null) {
+                    if (model.name != null && model.name != "") {
+                        if (model.passw != null && model.passw != ""
+                            && model.passw.length>5 && model.passw.length<21) {
+                            return true;
+                        }else{
+                            alert("请输入密码，且必须6~20位！");
+                            return false;
+                        }
+                    } else {
+                        alert("请输入用户名称！");
+                        return false;
+                    }
+                }else{
+                    alert("先选一个院系再加人！");
+                    return false;
+                }
+            },
+
+            /**
+             * 数据保存成功后执行
+             */
+            successHandler(data) {
+                alert(data.msg);
+            },
+
+            /**
+             * 跳转到角色-用户分配模块
+             */
+            roleSet(){
+                parent.app.addTab("角色-用户分配", "sys/roleuser.html");
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

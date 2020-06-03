@@ -23,6 +23,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!--安全登录security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,6 +73,13 @@
             <groupId>com.diffplug.guava</groupId>
             <artifactId>guava-cache</artifactId>
             <version>19.0.0</version>
+        </dependency>
+
+        <!--excel导入导出-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
         <dependency>
